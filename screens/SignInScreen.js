@@ -1,42 +1,106 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { TextInput } from 'react-native-gesture-handler';
 
-export default function SignInScreen() {
+export default function SignInScreen({navigation}) {
   return (
-    <View style={styles.container_SignInScreen}>
       <View style={styles.container_SignInScreen}>
         <View style={styles.title}>
-            <AntDesign name="arrowleft" size={24} color="black" />
-            <Text>Sign In</Text>
+          <View style={styles.arrow}>
+            <AntDesign name="arrowleft" size={30} color="black" />
+          </View>
+          <View style={styles.container_title_text}>
+            <Text style={styles.title_text}>Sign In</Text>
+          </View>
         </View>
         <View style={styles.body}>
-            <Text>body</Text>
+          <View style={styles.container_id}>
+            <View style={styles.container_text_id}>
+              <Text style={styles.text_id}>ID</Text>
+              <TextInput style={styles.input_id}></TextInput>
+            </View>
+            <TouchableOpacity>
+              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            </TouchableOpacity>
+          </View>
+          <View style={{...styles.container_id, marginTop:20}}>
+            <View style={styles.container_text_id}>
+              <Text style={styles.text_id}>Password</Text>
+              <TextInput style={styles.input_id} secureTextEntry={true}></TextInput>
+            </View>
+            <TouchableOpacity>
+              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            </TouchableOpacity>
+          </View>
+
         </View>
+        <TouchableOpacity 
+            style={styles.submit_btn}
+            // onPress={() => navigation.navigate('HomeScreen')}
+          >
+            <Text style={styles.submit_text}>Submit</Text>
+          </TouchableOpacity>
       </View>
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container_SignInScreen: {
-    flex:1,
-    backgroundColor: '#6e6e6e',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 150,
+    flex: 1,
   },
   title: {
-    flex: 1,
+    flex: 1.1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'center',
-    backgroundColor: 'red',
+    paddingHorizontal: 20,
+  },
+  arrow: {
+    flex: 1,
+  },
+  container_title_text: {
+    flex: 9,
+    alignItems: 'center',
+    paddingRight: 30,
+  },
+  title_text: {
+    fontSize: 30,
+    fontWeight: '600',
   },
   body: {
-    flex: 5,
+    flex: 8,
+  },
+  container_id: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: 40,
+    marginHorizontal: 20,
+    paddingHorizontal: 10,
+    height: 60,
+    backgroundColor: '#E6E6E6',
+    borderRadius: 8,
+  },
+  container_text_id: {
+    marginTop: -10,
+  },
+  text_id: {
+    color: '#6e6e6e',
+  },
+  submit_btn: {
+    flex: 0.7,
     justifyContent: 'center',
-    backgroundColor: 'green'
+    alignItems: 'center',
+    marginHorizontal: 20,
+    marginBottom: 50,
+    backgroundColor: '#000',
+    borderRadius: 10,
+  },
+  submit_text:{
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '500',
   }
 });

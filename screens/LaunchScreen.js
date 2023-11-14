@@ -4,10 +4,6 @@ import { Image } from 'expo-image';
 
 export default function LaunchScreen({navigation}) {
 
-  // const onSubmitPress = () => {
-  //   return ;
-  // }
-
   return (
     <View style={styles.container_LaunchScreen}>
       <View style={styles.container_LaunchScreen}>
@@ -23,7 +19,10 @@ export default function LaunchScreen({navigation}) {
         >
           <Text style={styles.sign_in_text}>Sign In</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.sign_up_btn}>
+        <TouchableOpacity 
+          style={styles.sign_up_btn}
+          onPress={() => navigation.navigate('SignUpScreen')}
+        >
           <Text style={styles.sign_up_text}>Don't you have an account?</Text>
         </TouchableOpacity>
         <StatusBar style="auto" />
@@ -38,6 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+
   },
   CandY_text: { // 시간 되면 그라데이션.
     fontSize: 60,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     borderRadius: 10,
     paddingVertical: 15,
-    paddingHorizontal: 120,
+    paddingHorizontal: 140,
     marginVertical: 10,
   },
   sign_in_text: {
