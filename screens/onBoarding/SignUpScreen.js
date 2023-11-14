@@ -5,9 +5,39 @@ import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default function SignInScreen({navigation}) {
+export default function SignUpScreen({navigation}) {
+
+
   const [id, onChangeId] = useState("");
+  const [id_warning, setId_warning] = useState("");
   const [password, onChangePassword] = useState("");
+  const [password_warning, setPassword_warning] = useState("")
+  const [confirm_pw, onChangeConfirm_pw] = useState("");
+  const [confirm_pw_warning, setConfirm_pw_warning] = useState("");
+
+  
+  // Make error when each fields are not valid.
+  // todo: make it in dynamic way whenever the text changes.
+  const handleWarning = () => {
+
+    if(id === "") { 
+      setId_warning("Please enter your ID.");
+    }
+    if(password === ""){
+      setPassword_warning("Please enter your password.");
+    }
+    if(password !== confirm_pw){
+      setConfirm_pw_warning("Your password and confirmation password must match.");
+    }
+  };
+
+  // check whether all fields are valid when submit button is clicked.
+  const validcheck = (id, password, confirm_pw) => {
+    if(id !== "" && password !== "" && password === confirm_pw){
+      navigation.removeListener;
+      navigation.navigate('SignInScreen');
+    }
+  }
 
   return (
       <View style={styles.container_SignInScreen}>
@@ -20,16 +50,18 @@ export default function SignInScreen({navigation}) {
             </TouchableOpacity>
           </View>
           <View style={styles.container_title_text}>
-            <Text style={styles.title_text}>Sign In</Text>
+            <Text style={styles.title_text}>Sign Up</Text>
           </View>
         </View>
+
         <View style={styles.body}>
+
           <View style={styles.container_id}>
             <View style={styles.container_text_id}>
               <Text style={styles.text_id}>ID</Text>
-              <TextInput 
+              <TextInput
                 onChangeText={onChangeId}
-                value={id}
+                text={id}
                 style={styles.input_id}
               />
             </View>
@@ -37,13 +69,15 @@ export default function SignInScreen({navigation}) {
               <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
             </TouchableOpacity>
           </View>
-          <View style={{...styles.container_id, marginTop:20}}>
+          <Text style={styles.warning}>{id_warning}</Text>
+
+          <View style={{...styles.container_id, marginTop:10}}>
             <View style={styles.container_text_id}>
               <Text style={styles.text_id}>Password</Text>
               <TextInput 
                 onChangeText={onChangePassword}
                 text={password}
-                style={styles.input_id}
+                style={styles.input_id} 
                 secureTextEntry={true}
               />
             </View>
@@ -51,14 +85,32 @@ export default function SignInScreen({navigation}) {
               <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
             </TouchableOpacity>
           </View>
+          <Text style={styles.warning}>{password_warning}</Text>
+
+          <View style={{...styles.container_id, marginTop:10}}>
+            <View style={styles.container_text_id}>
+              <Text style={styles.text_id}>Confirm password</Text>
+              <TextInput 
+                onChangeText={onChangeConfirm_pw}
+                text={confirm_pw}
+                style={styles.input_id} 
+                secureTextEntry={true}
+              />
+            </View>
+            <TouchableOpacity>
+              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.warning}>{confirm_pw_warning}</Text>
+
 
         </View>
         <TouchableOpacity 
             style={styles.submit_btn}
             onPress={() => {
-              // todo: sending to DB
-              console.log(id, password);
-              // navigation.navigate('HomeScreen')
+              console.log(id, password, confirm_pw);
+              handleWarning();
+              validcheck();
             }}
           >
             <Text style={styles.submit_text}>Submit</Text>
@@ -123,5 +175,9 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 20,
     fontWeight: '500',
+  },
+  warning: {
+    color: 'red',
+    marginHorizontal: 20,
   }
 });

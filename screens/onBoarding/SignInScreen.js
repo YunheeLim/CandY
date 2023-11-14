@@ -1,40 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View, Animated } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default function SignUpScreen({navigation}) {
-  const av = new Animated.Value(0);
-  av.addListener(() => {return});
-
+export default function SignInScreen({navigation}) {
 
   const [id, onChangeId] = useState("");
   const [id_warning, setId_warning] = useState("");
   const [password, onChangePassword] = useState("");
   const [password_warning, setPassword_warning] = useState("")
-  const [confirm_pw, onChangeConfirm_pw] = useState("");
-  const [confirm_pw_warning, setConfirm_pw_warning] = useState("");
-  const [valid, setValid] = useState(false);
-
-
-  const handleIdWarning = (id) => {
+  
+  // Make error when each fields are not valid.
+  // todo: make it in dynamic way whenever the text changes.
+  const handleWarning = () => {
 
     if(id === "") { 
       setId_warning("Please enter your ID.");
     }
-    // if(password === ""){
-    //   setPassword_warning("Please enter your password.");
-    // }
-    // if(password !== confirm_pw){
-    //   setConfirm_pw_warning("Your password and confirmation password must match.");
-    // }
+    if(password === ""){
+      setPassword_warning("Please enter your password.");
+    }
 
   };
 
-  const validcheck = (id, password, confirm_pw) => {
-    if(id !== "" && password !== "" && (password === confirm_pw)){
+  // check whether all fields are valid when submit button is clicked.
+  const validcheck = (id, password) => {
+    if(id !== "" && password !== ""){
       navigation.removeListener;
       navigation.navigate('SignInScreen');
     }
@@ -51,7 +44,7 @@ export default function SignUpScreen({navigation}) {
             </TouchableOpacity>
           </View>
           <View style={styles.container_title_text}>
-            <Text style={styles.title_text}>Sign Up</Text>
+            <Text style={styles.title_text}>Sign In</Text>
           </View>
         </View>
 
@@ -60,9 +53,9 @@ export default function SignUpScreen({navigation}) {
           <View style={styles.container_id}>
             <View style={styles.container_text_id}>
               <Text style={styles.text_id}>ID</Text>
-              <TextInput
+              <TextInput 
                 onChangeText={onChangeId}
-                text={id}
+                value={id}
                 style={styles.input_id}
               />
             </View>
@@ -72,13 +65,14 @@ export default function SignUpScreen({navigation}) {
           </View>
           <Text style={styles.warning}>{id_warning}</Text>
 
-          <View style={{...styles.container_id, marginTop:5}}>
+
+          <View style={{...styles.container_id, marginTop:10}}>
             <View style={styles.container_text_id}>
               <Text style={styles.text_id}>Password</Text>
               <TextInput 
                 onChangeText={onChangePassword}
                 text={password}
-                style={styles.input_id} 
+                style={styles.input_id}
                 secureTextEntry={true}
               />
             </View>
@@ -88,30 +82,16 @@ export default function SignUpScreen({navigation}) {
           </View>
           <Text style={styles.warning}>{password_warning}</Text>
 
-          <View style={{...styles.container_id, marginTop:5}}>
-            <View style={styles.container_text_id}>
-              <Text style={styles.text_id}>Confirm password</Text>
-              <TextInput 
-                onChangeText={onChangeConfirm_pw}
-                text={confirm_pw}
-                style={styles.input_id} 
-                secureTextEntry={true}
-              />
-            </View>
-            <TouchableOpacity>
-              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
-            </TouchableOpacity>
-          </View>
-          <Text style={styles.warning}>{confirm_pw_warning}</Text>
-
 
         </View>
         <TouchableOpacity 
             style={styles.submit_btn}
             onPress={() => {
-              console.log(id, password, confirm_pw);
-              handleIdWarning();
-              validcheck(id, password, confirm_pw);
+              // todo: sending to DB
+              console.log(id, password);
+              handleWarning();
+              validcheck(id, password);
+              // navigation.navigate('HomeScreen');
             }}
           >
             <Text style={styles.submit_text}>Submit</Text>
