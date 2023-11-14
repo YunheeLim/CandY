@@ -5,7 +5,7 @@ import { Entypo } from '@expo/vector-icons';
 
 const ID = "teamhot"
 
-export default function LaunchScreen({navigation}) {
+export default function Profile({navigation}) {
 
     const buildSeparator = () => {
         return <View style={styles.separator} />;
