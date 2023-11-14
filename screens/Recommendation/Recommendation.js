@@ -43,10 +43,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingHorizontal: 24
   },
-  sub_text: {
-    fontSize: 15,
-    fontWeight: '400',
-  },
   recommendation_text: {
     color: "black",
     fontSize: 20,
