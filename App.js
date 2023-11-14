@@ -5,15 +5,11 @@ import SignInScreen from './screens/SignInScreen';
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import Profile from './screens/profile/profile'
 
 export default function App() {
   const Stack = createStackNavigator();
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="LaunchScreen">
-        <Stack.Screen name="LaunchScreen" component={LaunchScreen} />
-        <Stack.Screen name="SignInScreen" component={SignInScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Profile />
   );
 }
