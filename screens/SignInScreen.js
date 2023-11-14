@@ -1,15 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 
 export default function SignInScreen({navigation}) {
+  const [id, onChangeId] = useState("");
+  const [password, onChangePassword] = useState("");
+
   return (
       <View style={styles.container_SignInScreen}>
         <View style={styles.title}>
           <View style={styles.arrow}>
-            <AntDesign name="arrowleft" size={30} color="black" />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('LaunchScreen')}
+            >
+              <AntDesign name="arrowleft" size={30} color="black" />
+            </TouchableOpacity>
           </View>
           <View style={styles.container_title_text}>
             <Text style={styles.title_text}>Sign In</Text>
@@ -19,7 +27,11 @@ export default function SignInScreen({navigation}) {
           <View style={styles.container_id}>
             <View style={styles.container_text_id}>
               <Text style={styles.text_id}>ID</Text>
-              <TextInput style={styles.input_id}></TextInput>
+              <TextInput 
+                onChangeText={onChangeId}
+                value={id}
+                style={styles.input_id}
+              />
             </View>
             <TouchableOpacity>
               <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
@@ -28,7 +40,12 @@ export default function SignInScreen({navigation}) {
           <View style={{...styles.container_id, marginTop:20}}>
             <View style={styles.container_text_id}>
               <Text style={styles.text_id}>Password</Text>
-              <TextInput style={styles.input_id} secureTextEntry={true}></TextInput>
+              <TextInput 
+                onChangeText={onChangePassword}
+                text={password}
+                style={styles.input_id}
+                secureTextEntry={true}
+              />
             </View>
             <TouchableOpacity>
               <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
@@ -38,7 +55,11 @@ export default function SignInScreen({navigation}) {
         </View>
         <TouchableOpacity 
             style={styles.submit_btn}
-            // onPress={() => navigation.navigate('HomeScreen')}
+            onPress={() => {
+              // todo: sending to DB
+              console.log(id, password);
+              // navigation.navigate('HomeScreen')
+            }}
           >
             <Text style={styles.submit_text}>Submit</Text>
           </TouchableOpacity>
