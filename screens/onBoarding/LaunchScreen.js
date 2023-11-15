@@ -1,13 +1,28 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
+import {LinearGradient} from 'expo-linear-gradient';
+import MaskedView from '@react-native-masked-view/masked-view';
 
 export default function LaunchScreen({navigation}) {
 
   return (
     <View style={styles.container_LaunchScreen}>
       <View style={styles.container_LaunchScreen}>
-        <Text style={styles.CandY_text}>CandY</Text>
+
+        <MaskedView
+              maskElement={<Text style={styles.CandY_text}>CandY</Text>
+            }>
+           <LinearGradient
+              locations={[0, 1]}
+              colors={['#0080FF', '#8000FF']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+            >
+            <Text style={[styles.CandY_text, {opacity:0}]}>CandY</Text>
+          </LinearGradient>
+        </MaskedView>
+
         <Text style={styles.sub_text}>Concentration and You!</Text>
         <Image 
           source="https://i.pinimg.com/564x/21/92/e7/2192e7faff6fd0106191b68e3700cd79.jpg"
@@ -39,7 +54,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
 
   },
-  CandY_text: { // 시간 되면 그라데이션.
+  CandY_text: {
     fontSize: 60,
     fontWeight: '700',
     color: '#5B30E6',

@@ -7,14 +7,23 @@ import { TextInput } from 'react-native-gesture-handler';
 
 export default function SignUpScreen({navigation}) {
 
-
-  const [id, onChangeId] = useState("");
+  // Manage values as states.
+  const [id, setId] = useState("");
   const [id_warning, setId_warning] = useState("");
-  const [password, onChangePassword] = useState("");
+  const [password, setPassword] = useState("");
   const [password_warning, setPassword_warning] = useState("")
-  const [confirm_pw, onChangeConfirm_pw] = useState("");
+  const [confirm_pw, setConfirm_pw]= useState("");
   const [confirm_pw_warning, setConfirm_pw_warning] = useState("");
 
+  // Set values whenenver the value is typed.
+  const onChangeId = (val) => setId(val);
+  const onChangePassword = (val) => setPassword(val);
+  const onChangeConfirm_pw = (val) => setConfirm_pw(val);
+  
+  // Set each values null when the cancel button is clicked.
+  const handleResetId = (val) => onChangeId("");
+  const handleResetPassword = (val) => onChangePassword("");
+  const handleResetConfirm_pw = (val) => onChangeConfirm_pw("");
   
   // Make error when each fields are not valid.
   // todo: make it in dynamic way whenever the text changes.
@@ -34,7 +43,7 @@ export default function SignUpScreen({navigation}) {
   // check whether all fields are valid when submit button is clicked.
   const validcheck = (id, password, confirm_pw) => {
     if(id !== "" && password !== "" && password === confirm_pw){
-      navigation.removeListener;
+      console.log('passed');
       navigation.navigate('SignInScreen');
     }
   }
@@ -61,12 +70,18 @@ export default function SignUpScreen({navigation}) {
               <Text style={styles.text_id}>ID</Text>
               <TextInput
                 onChangeText={onChangeId}
-                text={id}
+                value={id}
+                autoCapitalize='none'
                 style={styles.input_id}
               />
             </View>
-            <TouchableOpacity>
-              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            <TouchableOpacity
+              onPress={(id) => handleResetId(id)}
+            >
+            {(id !== "")
+                ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
+                : null
+              }
             </TouchableOpacity>
           </View>
           <Text style={styles.warning}>{id_warning}</Text>
@@ -76,13 +91,18 @@ export default function SignUpScreen({navigation}) {
               <Text style={styles.text_id}>Password</Text>
               <TextInput 
                 onChangeText={onChangePassword}
-                text={password}
+                value={password}
                 style={styles.input_id} 
                 secureTextEntry={true}
               />
             </View>
-            <TouchableOpacity>
-              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            <TouchableOpacity
+              onPress={(password) => handleResetPassword(password)}
+            >
+              {(password !== "")
+                  ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
+                  : null
+              }
             </TouchableOpacity>
           </View>
           <Text style={styles.warning}>{password_warning}</Text>
@@ -92,13 +112,18 @@ export default function SignUpScreen({navigation}) {
               <Text style={styles.text_id}>Confirm password</Text>
               <TextInput 
                 onChangeText={onChangeConfirm_pw}
-                text={confirm_pw}
+                value={confirm_pw}
                 style={styles.input_id} 
                 secureTextEntry={true}
               />
             </View>
-            <TouchableOpacity>
-              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            <TouchableOpacity
+              onPress={(confirm_pw) => handleResetConfirm_pw(confirm_pw)}
+            >
+              {(confirm_pw !== "")
+                  ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
+                  : null
+              }
             </TouchableOpacity>
           </View>
           <Text style={styles.warning}>{confirm_pw_warning}</Text>
@@ -108,9 +133,8 @@ export default function SignUpScreen({navigation}) {
         <TouchableOpacity 
             style={styles.submit_btn}
             onPress={() => {
-              console.log(id, password, confirm_pw);
               handleWarning();
-              validcheck();
+              validcheck(id, password, confirm_pw);
             }}
           >
             <Text style={styles.submit_text}>Submit</Text>
@@ -157,10 +181,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   container_text_id: {
+    flex: 1,
     marginTop: -10,
   },
   text_id: {
+    marginTop: 15,
+    flex:1,
     color: '#6e6e6e',
+  },
+  input_id:{
+    flex: 2,
+    width:300, 
+    paddingBottom: 10,
   },
   submit_btn: {
     flex: 0.7,

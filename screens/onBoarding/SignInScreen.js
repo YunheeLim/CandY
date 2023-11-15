@@ -7,10 +7,20 @@ import { TextInput } from 'react-native-gesture-handler';
 
 export default function SignInScreen({navigation}) {
 
-  const [id, onChangeId] = useState("");
+  // Manage values as states.
+  const [id, setId] = useState("");
   const [id_warning, setId_warning] = useState("");
-  const [password, onChangePassword] = useState("");
+  const [password, setPassword] = useState("");
   const [password_warning, setPassword_warning] = useState("")
+
+  // Set values whenenver the value is typed.
+  const onChangeId = (val) => setId(val);
+  const onChangePassword = (val) => setPassword(val);
+
+  // Set each values null when the cancel button is clicked.
+  const handleResetId = (val) => onChangeId("");
+  const handleResetPassword = (val) => onChangePassword("");
+  
   
   // Make error when each fields are not valid.
   // todo: make it in dynamic way whenever the text changes.
@@ -25,7 +35,7 @@ export default function SignInScreen({navigation}) {
 
   };
 
-  // check whether all fields are valid when submit button is clicked.
+  // Check whether all fields are valid when submit button is clicked.
   const validcheck = (id, password) => {
     if(id !== "" && password !== ""){
       navigation.removeListener;
@@ -56,11 +66,16 @@ export default function SignInScreen({navigation}) {
               <TextInput 
                 onChangeText={onChangeId}
                 value={id}
+                autoCapitalize='none'
                 style={styles.input_id}
               />
             </View>
-            <TouchableOpacity>
-              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            <TouchableOpacity
+              onPress={(id) => handleResetId(id)}
+            >{(id !== "")
+                ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
+                : null
+              }
             </TouchableOpacity>
           </View>
           <Text style={styles.warning}>{id_warning}</Text>
@@ -71,13 +86,17 @@ export default function SignInScreen({navigation}) {
               <Text style={styles.text_id}>Password</Text>
               <TextInput 
                 onChangeText={onChangePassword}
-                text={password}
+                value={password}
                 style={styles.input_id}
                 secureTextEntry={true}
               />
             </View>
-            <TouchableOpacity>
-              <MaterialIcons name="cancel" size={20} color="#a4a4a4" />
+            <TouchableOpacity
+              onPress={(password) => handleResetPassword(password)}
+            >{(password !== "") 
+                ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
+                : null
+              }
             </TouchableOpacity>
           </View>
           <Text style={styles.warning}>{password_warning}</Text>
@@ -138,10 +157,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   container_text_id: {
+    flex: 1,
     marginTop: -10,
   },
   text_id: {
+    marginTop: 15,
+    flex:1,
     color: '#6e6e6e',
+  },
+  input_id:{
+    flex: 2,
+    width:300, 
+    paddingBottom: 10,
   },
   submit_btn: {
     flex: 0.7,
