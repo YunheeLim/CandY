@@ -13,8 +13,6 @@ import Recommendation from './screens/Recommendation/Recommendation';
 export default function App() {
   const Stack = createStackNavigator();
   return (
-        // <Profile />
-        // <Recommendation />
 
     // for changing pages
     <NavigationContainer>
