@@ -38,8 +38,7 @@ export default function SignInScreen({navigation}) {
   // Check whether all fields are valid when submit button is clicked.
   const validcheck = (id, password) => {
     if(id !== "" && password !== ""){
-      navigation.removeListener;
-      navigation.navigate('SignInScreen');
+      navigation.navigate('Main');
     }
   }
 

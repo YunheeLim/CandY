@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import LaunchScreen from './screens/onBoarding/LaunchScreen';
 import SignInScreen from './screens/onBoarding/SignInScreen';
 import SignUpScreen from './screens/onBoarding/SignUpScreen';
+import Main from './screens/Main/main';
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -13,36 +14,7 @@ import * as React from "react";
 import * as Font from "expo-font";
 // import mainFont from "./assets/Fonts";
 
-function HomeScreen() {
-  return (
-    <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-      <Text style={{fontFamily:"font-Light", fontSize: 60}}> Just Testing... This is Home! </Text>
-    </View>
-  )
-}
-
-function StatScreen() {
-  return (
-    <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-      <Text style={{fontFamily:"font-ExtraBold", fontSize: 60}}> Just Testing... This is Home! </Text>
-    </View>
-  )
-}
-
-function RecommendScreen() {
-  return (
-    <Recommendation/>
-  )
-}
-
-function ProfileScreen() {
-  return (
-    <Profile />
-  )
-}
-
 export default function App() {
-  const Tab = createBottomTabNavigator();
   const [fonts, fontError] = Font.useFonts({
     "font-Regular": require('./assets/Fonts/Pretendard-Regular.otf'),
     "font-Medium": require('./assets/Fonts/Pretendard-Medium.otf'),
@@ -52,23 +24,17 @@ export default function App() {
     "font-ExtraBold": require('./assets/Fonts/Pretendard-ExtraBold.otf'),
   });
 
+  const Stack = createStackNavigator();
   return (
-
     // for changing pages
+    
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LaunchScreen">
         <Stack.Screen name="LaunchScreen" component={LaunchScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Main" component={Main} options={{headerShown: false}} />
       </Stack.Navigator>
-    </NavigationContainer>
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name="Statisitics" component={StatScreen} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name="Recommend" component={RecommendScreen} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}}></Tab.Screen>
-      </Tab.Navigator>
     </NavigationContainer>
   );
 }
