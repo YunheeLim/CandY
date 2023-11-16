@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import "react-native-gesture-handler";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import Home from '../Home/Home';
 import Profile from "../profile/profile"
 import Recommendation from '../Recommendation/Recommendation';
 import * as React from "react";
@@ -10,9 +11,7 @@ import * as Font from "expo-font";
 
 function HomeScreen() {
     return (
-      <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{fontFamily:"font-Light", fontSize: 60}}> Just Testing... This is Home! </Text>
-      </View>
+      <Home/>
     )
   }
   
