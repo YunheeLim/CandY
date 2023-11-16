@@ -4,6 +4,7 @@ import "react-native-gesture-handler";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Profile from "../profile/profile"
 import Recommendation from '../Recommendation/Recommendation';
+import Statisitics from '../Statistics/Statistics';
 import * as React from "react";
 import * as Font from "expo-font";
 
@@ -18,9 +19,7 @@ function HomeScreen() {
   
   function StatScreen() {
     return (
-      <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{fontFamily:"font-ExtraBold", fontSize: 60}}> Just Testing... This is Home! </Text>
-      </View>
+      <Statisitics />
     )
   }
   
