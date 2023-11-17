@@ -2,16 +2,25 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import "react-native-gesture-handler";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import Home from '../Home/Home';
 import Profile from "../profile/profile"
 import Recommendation from '../Recommendation/Recommendation';
+import RecordScreen from '../Record/Record';
+
 import * as React from "react";
 import * as Font from "expo-font";
 
 
 function HomeScreen() {
+
+    const Stack = createStackNavigator();
+
     return (
-      <Home/>
+      <Stack.Navigator initialRouteName="HomeScreen">
+        <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }}/>
+        <Stack.Screen name="RecordScreen" component={RecordScreen} options={{ headerShown: false }}/>
+      </Stack.Navigator>
     )
   }
   

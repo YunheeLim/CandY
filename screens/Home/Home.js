@@ -44,7 +44,10 @@ export default function Home({navigation}) {
                 </View>             
             </View>
             <View style={styles.container_record}>
-                <TouchableOpacity style={styles.record_btn}>
+                <TouchableOpacity 
+                    onPress={() => navigation.navigate('RecordScreen')}
+                    style={styles.record_btn}
+                >
                     <Text style={styles.record_text}>Record Working</Text>                    
                 </TouchableOpacity>
 
