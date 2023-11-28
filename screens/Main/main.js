@@ -3,13 +3,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import "react-native-gesture-handler";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from '../Home/Home';
 import Profile from "../profile/profile"
 import Recommendation from '../Recommendation/Recommendation';
+import Statistics from '../Statistics/Statistics';
+import DailyStatistics from '../Statistics/DailyStatistics';
+import Home from '../Home/Home';
 import RecordScreen from '../Record/Record';
 
 import * as React from "react";
 import * as Font from "expo-font";
+import SessionStatistics from '../Statistics/SessionStatistics';
 
 
 function HomeScreen() {
@@ -24,14 +27,6 @@ function HomeScreen() {
     )
   }
   
-  function StatScreen() {
-    return (
-      <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{fontFamily:"font-ExtraBold", fontSize: 60}}> Just Testing... This is Home! </Text>
-      </View>
-    )
-  }
-  
   function RecommendScreen() {
     return (
       <Recommendation/>
@@ -43,12 +38,32 @@ function HomeScreen() {
       <Profile />
     )
   }
-export default function Main({navigation}) {
+  // Build Statistics Navigator Stack and Register the screens
+  function StatNavigator() {
+    const StatStack = createStackNavigator();
+    return (
+      <StatStack.Navigator>
+        <StatStack.Screen name="Statistics" component={Statistics} options={{headerShown: false}} />
+        {/* Get the information from previous screen */}
+        <StatStack.Screen name='DailyStatistics' component={DailyStatistics} options={({route}) => ({
+          title: `${route.params.key}`,
+          headerBackTitleVisible: false,
+        })} />
+        {/* Get the information from previous screen */}
+        <StatStack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
+          title: `Session ${route.params.key}`,
+          headerBackTitleVisible: false,
+        })} />
+      </StatStack.Navigator>
+    )
+  }
+export default function Main() {
     const Tab = createBottomTabNavigator();
+    
     return (
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name="Statisitics" component={StatScreen} options={{headerShown: false}}></Tab.Screen>
+        <Tab.Screen name="Statistics" component={StatNavigator} options={{headerShown: false}}></Tab.Screen>
         <Tab.Screen name="Recommend" component={RecommendScreen} options={{headerShown: false}}></Tab.Screen>
         <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}}></Tab.Screen>
       </Tab.Navigator>
