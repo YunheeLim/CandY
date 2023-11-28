@@ -4,13 +4,14 @@ import { Entypo } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
 
+// Todo: Dummy data
 const places = [
-    {id: 1, name:"HR", value:"97"}, 
-    {id: 2, name:"HRV", value:"36"}, 
-    {id: 3, name:"EDA", value:"97"},
-    {id: 4, name:"Sleep Duration", value:"8"}
+    {key: 1, name:"HR", value:"97"}, 
+    {key: 2, name:"HRV", value:"36"}, 
+    {key: 3, name:"EDA", value:"97"},
+    {key: 4, name:"Sleep Duration", value:"8"}
 ];
-const concentValue = 50;
+
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 export default function SessionStatistics({route}) {
@@ -25,11 +26,13 @@ export default function SessionStatistics({route}) {
             </View>
         </View>
         <ScrollView style={{flex: 1,}}>
+            {/* Usign data to build dynamic View */}
             {places.map((p, i) => {
-                return <View style={styles.cell_Session}>
+                return <View style={styles.cell_Session} key={p.key}>
                 <Text style={styles.session_Text}>{p.name}</Text>
                 <View style={{flexDirection:'row', marginTop: 10, justifyContent: "space-around"}}>
                     <Text style={styles.place}>{p.value}</Text>
+                    {/* Nested ternary operator */}
                     <Text style={styles.time}>{p.name === "HR" ? "bpm": p.name === "HRV" ? "ms": p.name === "EDA" ? "µS" : "hours"}</Text>
                     <View style={{flex:2}}></View>
                 </View>

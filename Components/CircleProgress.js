@@ -22,12 +22,14 @@ export default function Donut({
   textColor,
   max = 100
 }) {
+    // declare the initial Values
   const animated = React.useRef(new Animated.Value(0)).current;
   const circleRef = React.useRef();
   const inputRef = React.useRef();
   const circumference = 2 * Math.PI * radius;
   const halfCircle = radius + strokeWidth;
 
+// Progress Animation Setting
   const animation = (toValue) => {
     return Animated.timing(animated, {
       delay: 1000,
@@ -37,7 +39,7 @@ export default function Donut({
       easing: Easing.out(Easing.ease),
     }).start();
   };
-
+// Set the animation Timing, when the max and the percentage Changes.
   React.useEffect(() => {
     animation(percentage);
     animated.addListener((v) => {

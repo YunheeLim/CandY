@@ -8,8 +8,6 @@ import Recommendation from '../Recommendation/Recommendation';
 import Statistics from '../Statistics/Statistics';
 import DailyStatistics from '../Statistics/DailyStatistics';
 import Home from '../Home/Home';
-import Profile from "../profile/profile"
-import Recommendation from '../Recommendation/Recommendation';
 import RecordScreen from '../Record/Record';
 
 import * as React from "react";
@@ -29,12 +27,6 @@ function HomeScreen() {
     )
   }
   
-  function StatScreen() {
-    return (
-      <Statistics />
-    )
-  }
-  
   function RecommendScreen() {
     return (
       <Recommendation/>
@@ -46,17 +38,20 @@ function HomeScreen() {
       <Profile />
     )
   }
+  // Build Statistics Navigator Stack and Register the screens
   function StatNavigator() {
     const StatStack = createStackNavigator();
     return (
       <StatStack.Navigator>
         <StatStack.Screen name="Statistics" component={Statistics} options={{headerShown: false}} />
+        {/* Get the information from previous screen */}
         <StatStack.Screen name='DailyStatistics' component={DailyStatistics} options={({route}) => ({
-          title: `${route.params.id}`,
+          title: `${route.params.key}`,
           headerBackTitleVisible: false,
         })} />
+        {/* Get the information from previous screen */}
         <StatStack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
-          title: `Session ${route.params.id}`,
+          title: `Session ${route.params.key}`,
           headerBackTitleVisible: false,
         })} />
       </StatStack.Navigator>

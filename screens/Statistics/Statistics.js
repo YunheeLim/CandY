@@ -1,18 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Platform , Button, Alert, Dimensions} from 'react-native';
 import * as React from "react";
-import { TextInput } from 'react-native-gesture-handler';
 import {Calendar} from 'react-native-calendars';
 import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
-import { Header } from '@react-navigation/stack';
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
+// Calendar Component
 const MyCalendar = ({navigation}) => {
     return (
         <View style={styles.container}> 
             <Calendar 
+            // Day Tap Action
                 onDayPress={(day) => navigation.navigate("DailyStatistics", {id: day.dateString, navigation: navigation})}
+                // Just Dummy Data
                 markedDates={{ 
                     '2023-11-17': { selected: true}, 
                     '2023-11-18': { selected: true }, 
@@ -50,6 +51,7 @@ const MyCalendar = ({navigation}) => {
                         justifyContent: "center",
                     },
                     'stylesheet.day.basic': {
+                        // Modifying the Day Style
                         'base': {
                             width: 30,
                             height: 50,
@@ -78,6 +80,7 @@ export default function Statistics({navigation}) {
             backgroundColor: 'white'
         }}> 
             <ExpoStatusBar style='auto' />
+            {/* transfer navigation variables to Calendar */}
             <MyCalendar navigation={navigation} /> 
         </View>
     );

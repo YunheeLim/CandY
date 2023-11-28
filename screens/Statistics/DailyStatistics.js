@@ -3,23 +3,18 @@ import { StyleSheet, Text, View, TouchableOpacity, Animated,Dimensions, ScrollVi
 import { Entypo } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
-import SessionStatistics from './SessionStatistics';
 
+// Todo: Dummy data
 const places = [
-    {id: 1, name:"Starbucks", times:"10:00 a.m."}, 
-    {id: 2, name:"K-Sqaure", times:"1:34 p.m."}, 
-    {id: 3, name:"Lark", times:"9:54 p.m."}
+    {key: 1, name:"Starbucks", times:"10:00 a.m."}, 
+    {key: 2, name:"K-Sqaure", times:"1:34 p.m."}, 
+    {key: 3, name:"Lark", times:"9:54 p.m."}
 ];
 const concentValue = 50;
+
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 export default function DailyStatistics({navigation}) {
-    const springValue = React.useRef(new Animated.Value(0)).current;
-    const springAnimation = () => {
-        Animated.spring(springValue, {
-            toValue: concentValue
-        })
-    }
 
   return (
     <View style={styles.container_Stat}>
@@ -32,8 +27,9 @@ export default function DailyStatistics({navigation}) {
             </View>
         </View>
         <ScrollView style={{flex: 1,}}>
+            {/* Using Data to make dynamic View */}
             {places.map((p, i) => {
-                return <View style={styles.cell_Session}>
+                return <View style={styles.cell_Session} key={p.key}>
                 <Text style={styles.session_Text}>Session {i + 1}</Text>
                 <View style={{flexDirection:'row', marginTop: 10, justifyContent: "space-around"}}>
                     <Text style={styles.place}>{p.name}</Text>

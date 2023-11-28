@@ -4,6 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import Svg, {Circle} from 'react-native-svg';
 import Donut from './CircleProgress';
 
+// Todo: Dummy Data
 const data = [{
   percentage: 50,
   color: "#5B30E6",
