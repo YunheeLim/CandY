@@ -238,8 +238,8 @@ const styles = StyleSheet.create({
     paddingRight: 30,
   },
   title_text: {
-    fontSize: 30,
-    fontWeight: '600',
+    fontSize: 25,
+    fontFamily: 'font-Bold',
   },
   body: {
     flex: 8,
@@ -263,6 +263,7 @@ const styles = StyleSheet.create({
     marginTop: 15,
     flex:1,
     color: '#6e6e6e',
+    fontFamily: 'font-Medium',
   },
   input_id:{
     flex: 2,
@@ -281,7 +282,7 @@ const styles = StyleSheet.create({
   submit_text:{
     color: '#fff',
     fontSize: 20,
-    fontWeight: '500',
+    fontFamily: 'font-Medium',
   },
   warning: {
     color: 'red',
