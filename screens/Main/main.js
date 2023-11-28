@@ -7,16 +7,25 @@ import Profile from "../profile/profile"
 import Recommendation from '../Recommendation/Recommendation';
 import Statistics from '../Statistics/Statistics';
 import DailyStatistics from '../Statistics/DailyStatistics';
+import Home from '../Home/Home';
+import Profile from "../profile/profile"
+import Recommendation from '../Recommendation/Recommendation';
+import RecordScreen from '../Record/Record';
+
 import * as React from "react";
 import * as Font from "expo-font";
 import SessionStatistics from '../Statistics/SessionStatistics';
 
 
 function HomeScreen() {
+
+    const Stack = createStackNavigator();
+
     return (
-      <View style={{flex:1, justifyContent: "center", alignItems: "center"}}>
-        <Text style={{fontFamily:"font-Light", fontSize: 60}}> Just Testing... This is Home! </Text>
-      </View>
+      <Stack.Navigator initialRouteName="HomeScreen">
+        <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }}/>
+        <Stack.Screen name="RecordScreen" component={RecordScreen} options={{ headerShown: false }}/>
+      </Stack.Navigator>
     )
   }
   
