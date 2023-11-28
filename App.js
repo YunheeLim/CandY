@@ -17,17 +17,9 @@ import * as Font from "expo-font";
 
 export default function App() {
 
-  // const [fonts, fontError] = Font.useFonts({
-  //   "font-Regular": require('./assets/Fonts/Pretendard-Regular.otf'),
-  //   "font-Medium": require('./assets/Fonts/Pretendard-Medium.otf'),
-  //   "font-Light": require('./assets/Fonts/Pretendard-Light.otf'),
-  //   "font-Bold": require('./assets/Fonts/Pretendard-Bold.otf'),
-  //   "font-SemiBold": require('./assets/Fonts/Pretendard-SemiBold.otf'),
-  //   "font-ExtraBold": require('./assets/Fonts/Pretendard-ExtraBold.otf'),
-  // });
-
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Wait until the font is loaded.
   useEffect(() => {
     (async () => {await Font.loadAsync({
       "font-Regular": require('./assets/Fonts/Pretendard-Regular.otf'),
