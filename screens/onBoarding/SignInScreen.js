@@ -12,6 +12,9 @@ export default function SignInScreen({navigation}) {
   const [id_warning, setId_warning] = useState("");
   const [password, setPassword] = useState("");
   const [password_warning, setPassword_warning] = useState("")
+  const [valid_id, setValid_id] = useState(false); // save whether ID is valid.
+  const [valid_password, setValid_password] = useState(false); // save whether password is valid.
+  const [validation_mode, setValidation_mode] = useState(false); // turns to true when the submit button is pressed.
 
   // Set values whenenver the value is typed.
   const onChangeId = (val) => setId(val);
@@ -20,18 +23,31 @@ export default function SignInScreen({navigation}) {
   // Set each values null when the cancel button is clicked.
   const handleResetId = (val) => onChangeId("");
   const handleResetPassword = (val) => onChangePassword("");
-  
-  
-  // Make error when each fields are not valid.
-  // todo: make it in dynamic way whenever the text changes.
-  const handleWarning = () => {
 
-    if(id === "") { 
-      setId_warning("Please enter your ID.");
+  
+  // Show warning messages in dynamic way whenever each fields changes.
+  useEffect(() => {
+    handle_Id_Warning();
+  }, [id]);
+
+  useEffect(() => {
+    handle_Password_Warning();
+  }, [password]);
+
+  // Show warning message when ID is not valid.
+  const handle_Id_Warning = () => {
+    if(id !== ""){
+      setId_warning("");
     }
-    if(password === ""){
-      setPassword_warning("Please enter your password.");
+    //TODO: Show warning message when ID doesn't match ID from DB.
+  };
+
+  // Show warning message when password is not valid.
+  const handle_Password_Warning = () => {
+    if(password !== ""){
+      setPassword_warning("");
     }
+    //TODO: Show warning message when password doesn't match password from DB.
 
   };
 
@@ -39,6 +55,12 @@ export default function SignInScreen({navigation}) {
   const validcheck = (id, password) => {
     if(id !== "" && password !== ""){
       navigation.navigate('Main');
+    }
+    if(id === "") { 
+      setId_warning("Please enter your ID.");
+    }
+    if(password === ""){
+      setPassword_warning("Please enter your password.");
     }
   }
 
@@ -71,7 +93,7 @@ export default function SignInScreen({navigation}) {
             </View>
             <TouchableOpacity
               onPress={(id) => handleResetId(id)}
-            >{(id !== "")
+            >{(id !== "") // If ID is typed, the cancel button show up.
                 ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
                 : null
               }
@@ -92,7 +114,7 @@ export default function SignInScreen({navigation}) {
             </View>
             <TouchableOpacity
               onPress={(password) => handleResetPassword(password)}
-            >{(password !== "") 
+            >{(password !== "") // If password is typed, the cancel button show up.
                 ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
                 : null
               }
@@ -106,10 +128,7 @@ export default function SignInScreen({navigation}) {
             style={styles.submit_btn}
             onPress={() => {
               // todo: sending to DB
-              console.log(id, password);
-              handleWarning();
               validcheck(id, password);
-              // navigation.navigate('HomeScreen');
             }}
           >
             <Text style={styles.submit_text}>Submit</Text>

@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import "react-native-gesture-handler";
 import { Image } from 'expo-image';
 import {LinearGradient} from 'expo-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
@@ -55,29 +56,33 @@ const styles = StyleSheet.create({
 
   },
   CandY_text: {
-    fontSize: 60,
+    fontSize: 65,
     fontWeight: '700',
     color: '#5B30E6',
+    fontFamily: "font-Bold",
   },
   sub_text: {
     fontSize: 20,
     fontWeight: '500',
+    fontFamily: "font-Bold",
   },
   sign_in_btn: {
     backgroundColor: '#000',
     borderRadius: 10,
     paddingVertical: 15,
-    paddingHorizontal: 140,
+    paddingHorizontal: 120,
     marginVertical: 10,
   },
   sign_in_text: {
     color: '#fff',
     fontSize: 20,
     fontWeight:'500',
+    fontFamily: "font-Medium",
   },
   sign_up_text:{
     textDecorationLine: 'underline',
     color: '#6e6e6e', 
+    fontFamily: "font-Medium",
   }
 
 });
