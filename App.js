@@ -27,7 +27,6 @@ export default function App() {
   const Stack = createStackNavigator();
   return (
     // for changing pages
-    
     <NavigationContainer>
       <Stack.Navigator initialRouteName="LaunchScreen">
         <Stack.Screen name="LaunchScreen" component={LaunchScreen} options={{ headerShown: false }}/>
