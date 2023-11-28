@@ -1,78 +1,84 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Platform , Button, Alert, } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
-import * as Calendar from "expo-calendar";
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Platform , Button, Alert, Dimensions} from 'react-native';
 import * as React from "react";
 import { TextInput } from 'react-native-gesture-handler';
-import CalendarPicker from 'react-native-calendar-picker';
+import {Calendar} from 'react-native-calendars';
+import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
+import { Header } from '@react-navigation/stack';
 
+const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
-export default function Statisitics({navigation}) {
-    React.useEffect(() => {
-        (async () => {
-            const {status} = await Calendar.requestCalendarPermissionsAsync();
-            if (status === 'granted') {
-                const calendars = await Calendar.getCalendarsAsync (
-                    Calendar.EntityTypes.EVENT
-                );
-
-            }
-        })();
-    }, []);
-    async function getDefaultCalendarSource() {
-        const calendars = await Calendar.getCalendarsAsync(
-            Calendar.EntityTypes.EVENT
-        );
-        const defaultCalendars = calendars.filter(
-            (each) => each.source.name === 'Default'
-        );
-        return defaultCalendars.length ? defaultCalendars[0].source : calendars[0].source;
-    }
-
-    async function createCalendar() {
-        const defaultCalendarSource = Platform.OS === 'ios' ? await getDefaultCalendarSource() : {isLocalAccount: true, name: 'Expo calendar'};
-        const newCalendarID = await Calendar.createCalendarAsync({
-            title: "Expo Calendar",
-            color: "blue",
-            entityType: Calendar.EntityTypes.EVENT,
-            sourceId: defaultCalendarSource.id,
-            source: defaultCalendarSource,
-            name: 'internalCalendarName',
-            ownerAccount: 'personal',
-            accessLevel: Calendar.CalendarAccessLevel.OWNER,
-        });
-        return newCalendarID;
-    } 
-    const [selectedStartDate, setSelectedStartDate] = React.useState(null);
-    const startDate = selectedStartDate ? selectedStartDate.format('YYYY-MM-DD').toString(): '';
-    
-    const [friendNameText, setFriendNameText] = React.useState("");
-    
-    const addNewEvent = async () => {
-        try {
-            const calendarId = await createCalendar();
-
-            const res = await Calendar.createEventAsync(calendarId, {
-                endDate: getAppointmentDate(endDate),
-                startDate: getAppointmentDate(startDate),
-                title: "Happy Brithday buddy " + friendNameText,
-            });
-            Alert.alert("Event Created!");
-        } catch (e) {
-            console.log(e);
-        }
-    }
+const MyCalendar = ({navigation}) => {
     return (
-        <View style={styles.container}>
-            <StatusBar style="auto"></StatusBar>
-        <CalendarPicker onDateChange={setSelectedStartDate}></CalendarPicker>
-        <TextInput
-        onChangeText={setFriendNameText}
-        value={friendNameText}
-        placeholder='Enter the name of your Friend'
-        style={styles.input}
-         />
-        <Button title='Add to Calendar' onPress={addNewEvent} />
+        <View style={styles.container}> 
+            <Calendar 
+                onDayPress={(day) => navigation.navigate("DailyStatistics", {id: day.dateString, navigation: navigation})}
+                markedDates={{ 
+                    '2023-11-17': { selected: true}, 
+                    '2023-11-18': { selected: true }, 
+                    '2023-11-19': { 
+                        selected: true,
+                        activeOpacity: 0
+                    }, 
+                }} 
+                theme={{ 
+                    backgroundColor: '#ffffff', 
+                    calendarBackground: '#ffffff', 
+                    textSectionTitleColor: '#b6c1cd', 
+                    selectedDayBackgroundColor: '#5B30E6', 
+                    selectedDayTextColor: '#ffffff', 
+                    todayTextColor: '#00adf5', 
+                    dayTextColor: '#2d4150', 
+                    textDisabledColor: '#d9e1e8', 
+                    dotColor: '#00adf5', 
+                    selectedDotColor: '#ffffff', 
+                    arrowColor: 'black', 
+                    monthTextColor: 'black', 
+                    indicatorColor: 'blue', 
+                    textDayFontFamily: 'font-Regular', 
+                    textMonthFontFamily: 'font-Regular',  
+                    textDayHeaderFontFamily: 'font-Bold',
+                    textDayFontSize: 16, 
+                    textMonthFontSize: 20, 
+                    textDayHeaderFontSize: 14,
+                    arrowStyle: {
+                        width: 20, 
+                        borderColor: "grey", 
+                        borderWidth: 0.5, 
+                        borderRadius: 5,
+                        alignItems: "center",
+                        justifyContent: "center",
+                    },
+                    'stylesheet.day.basic': {
+                        'base': {
+                            width: 30,
+                            height: 50,
+                            alignItems: "center",
+                            justifyContent: 'center',
+                        }
+                    },
+
+                }} 
+                style={{
+                    width:SCREEN_WIDTH,
+                    margin:40,
+                    flex: 1
+                }}
+            /> 
+        </View> 
+    )
+}
+
+export default function Statistics({navigation}) {
+    return (
+        <View style={{  
+            flex: 1,  
+            justifyContent: 'center',  
+            alignItems: 'center',
+            backgroundColor: 'white'
+        }}> 
+            <ExpoStatusBar style='auto' />
+            <MyCalendar navigation={navigation} /> 
         </View>
     );
 }
@@ -83,6 +89,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: 'center',
     justifyContent: 'center',
+    marginHorizontal: 0,
+    width: SCREEN_WIDTH,
+    marginTop: 40
   },
   input: {
     height: 40,
