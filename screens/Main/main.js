@@ -23,6 +23,10 @@ function HomeScreen() {
       <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }}/>
         <Stack.Screen name="RecordScreen" component={RecordScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="DailyStatistics" component={DailyStatistics} options={({route}) => ({
+          title: `${route.params.id}`,
+          headerBackTitleVisible: false,
+        })} />
       </Stack.Navigator>
     )
   }
@@ -46,12 +50,12 @@ function HomeScreen() {
         <StatStack.Screen name="Statistics" component={Statistics} options={{headerShown: false}} />
         {/* Get the information from previous screen */}
         <StatStack.Screen name='DailyStatistics' component={DailyStatistics} options={({route}) => ({
-          title: `${route.params.key}`,
+          title: `${route.params.id}`,
           headerBackTitleVisible: false,
         })} />
         {/* Get the information from previous screen */}
         <StatStack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
-          title: `Session ${route.params.key}`,
+          title: `Session ${route.params.id}`,
           headerBackTitleVisible: false,
         })} />
       </StatStack.Navigator>
