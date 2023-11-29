@@ -13,9 +13,9 @@ const SCORE = 50;
 export default function Home({navigation}) {
 
     // Get yesterday date
-    // const date = new Date();
-    // date.setDate(date.getDate() - 1);
-    // const yesterday = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    const yesterday = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
     
     return (
       <View style={styles.container_Home}>
@@ -40,7 +40,7 @@ export default function Home({navigation}) {
         <View style={styles.body}>
             <TouchableOpacity 
                 style={styles.cell}
-                // onPress={() => navigation.navigate('DailyStatistics', {id: yesterday, navigation: navigation})}
+                onPress={() => navigation.navigate('DailyStatistics', {id: yesterday, navigation: navigation})}
             >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
                 <Text style={styles.for_yesterday_text}>for yesterday</Text>            
