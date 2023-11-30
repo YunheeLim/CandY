@@ -1,16 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import "react-native-gesture-handler";
-import * as React from "react";
+import {useState} from "react";
 import * as Font from "expo-font";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-// import CircularProgress from 'react-native-circular-progress-indicator';
+import CircularProgress from '../../Components/CircularProgress';
 
 const ID = "teamhot";
 const WELCOME_TEXT = "Good Morning,";
 const SCORE = 50;
 
 export default function Home({navigation}) {
+
+    // Get yesterday date
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    const yesterday = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
     
     return (
       <View style={styles.container_Home}>
@@ -33,16 +38,14 @@ export default function Home({navigation}) {
         </View>
 
         <View style={styles.body}>
-            <View style={styles.cell}>
+            <TouchableOpacity 
+                style={styles.cell}
+                onPress={() => navigation.navigate('DailyStatistics', {id: yesterday, navigation: navigation})}
+            >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
-                <Text style={styles.for_yesterday_text}>for yesterday</Text>
-                {/* todo: make progress bar in dynamic way. */}
-                <View style={styles.circle_outside}>
-                    <View style={styles.circle_inside}>
-                        <Text style={styles.score}>{SCORE}</Text>
-                    </View>
-                </View>             
-            </View>
+                <Text style={styles.for_yesterday_text}>for yesterday</Text>            
+                <CircularProgress radius={80} />
+            </TouchableOpacity>
             <View style={styles.container_record}>
                 <TouchableOpacity 
                     onPress={() => navigation.navigate('RecordScreen')}
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
     },
     welcome_text: {
         fontSize: 15,
-        fontFamily: 'font-Regular',
+        fontFamily: 'font-Medium',
         color: 'grey',
     },
     id_text: {
@@ -113,42 +116,24 @@ const styles = StyleSheet.create({
         borderRadius: 18,
         paddingHorizontal: 30,
         height: 240,
-     flexShrink: 0,
+        flexShrink: 0,
         borderWidth: 0.5,
         borderStyle: "solid",
         borderColor: "#D0D0D0",   
     },
     concentration_score_text: {
+        marginTop: 20,
         marginHorizontal: -70,
-        fontSize: 20,
+        fontSize: 22,
         fontFamily: 'font-Bold',
     },
     for_yesterday_text: {
+        marginTop: 5,
         marginHorizontal: 80,
         marginBottom: 20,
-        fontSize: 17,
+        fontSize: 18,
         fontFamily: 'font-Regular',
         color: 'grey',
-    },
-    circle_outside: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 180,
-        height: 180,
-        borderRadius: 90,
-        backgroundColor: '#F2EFFB',
-    },
-    circle_inside: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 150,
-        height: 150,
-        borderRadius: 75,
-        backgroundColor: 'white',
-    },
-    score: {
-        fontSize: 50,
-        fontFamily: 'font-Bold',
     },
     container_record: {
         flex: 1,
