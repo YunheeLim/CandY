@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CircularProgress from '../../Components/CircularProgress';
 
 const ID = "teamhot";
-const SCORE = 50;
+const SCORE = 70;
 
 export default function Home({navigation}) {
 
@@ -56,7 +56,7 @@ export default function Home({navigation}) {
             >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
                 <Text style={styles.for_yesterday_text}>for yesterday</Text>            
-                <CircularProgress radius={80} />
+                <CircularProgress percentage={SCORE} radius={80} />
             </TouchableOpacity>
             <View style={styles.container_record}>
                 <TouchableOpacity 
@@ -127,11 +127,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 18,
         paddingHorizontal: 30,
+        marginTop: 25,
         height: 240,
         flexShrink: 0,
         borderWidth: 0.5,
         borderStyle: "solid",
-        borderColor: "#D0D0D0",   
+        borderColor: "#D0D0D0",
     },
     concentration_score_text: {
         marginTop: 20,
@@ -148,8 +149,8 @@ const styles = StyleSheet.create({
         color: 'grey',
     },
     container_record: {
-        flex: 1,
         justifyContent: 'center',
+        marginVertical: 80,
     },
     record_btn: {
         backgroundColor: '#000',
