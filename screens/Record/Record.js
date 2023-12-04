@@ -15,17 +15,14 @@ export default function RecordScreen({navigation}) {
     const [isRunning, setIsRunning] = useState(false); // Whether the stop watch is active or not.
     const [startTime, setStartTime] = useState(""); // The time when the user starts working.
     const [finishTime, setFinishTime] = useState(""); // The time when the user ends working.
-    const [valid, setValid] = useState(false); // Whether all values are valid or not.
+    const [validPlace, setValidPlace] = useState(false); // Whether the where data exists or not.
+    const [validTime, setValidTime] = useState(false); // Whether the time data existes or not.
+    const [submitMode, setSubmitMode] = useState(false); // Turns true when the submit button is pressed.
 
     // Set values as the value is typed.
     const onChangePlace = (val) =>{
         setPlace(val);
     }
-
-    // Make synchronize place value with onChangePlace function
-    useEffect(() => {
-        console.log(`Place: ${place}`);
-    }, [place]);
 
     // Count up the stop watch every second.
     useEffect(() => {
@@ -43,6 +40,23 @@ export default function RecordScreen({navigation}) {
 
     }, [isRunning, seconds]);
 
+    // Manage the place value and submit state at the same time.
+    useEffect(() => {
+        if (place !== ""){
+            setValidPlace(true);
+        }else if (place === "" && !submitMode){
+            setValidPlace(true);
+        }
+    }, [place]);
+
+    useEffect(() => {
+        if(startTime !== ""){
+            setValidTime(true);
+        }else if(startTime === "" && !submitMode){
+            setValidTime(true);
+        }
+    }, [startTime]);
+
     // Is called when the start/stop button is pressed.
     const handleStartStop = () => {
 
@@ -51,7 +65,7 @@ export default function RecordScreen({navigation}) {
             // Make the date format in MySQL DATETIME foramt.
             const start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setStartTime(start_time);
-            console.log('start time: ', startTime);
+            console.log('start time: ', start_time);
         }
 
         setIsRunning(!isRunning);
@@ -60,18 +74,27 @@ export default function RecordScreen({navigation}) {
     // TODO: Sending the data to the server.
     // Is called when the submit button is pressed.
     const handleSubmit = () => {
+        setSubmitMode(true);
 
-        if (place === ""){ // When the value of place doesn't exist.
-            
-        }else{
-            // Reset the time.
+        if (place === ""){
+            setValidPlace(false);
+        }
+        if (startTime === ""){
+            setValidTime(false);
+        }
+        if (place !== "" && startTime !== ""){
+            setValidPlace(true);
+            setValidTime(true);
+
+            // Reset the time and place.
             setSeconds(0);
             setIsRunning(false);
+            setPlace("");
 
             // Make the date format in MySQL DATETIME foramt.
             const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setFinishTime(finish_time);
-            console.log('finish time: ', finishTime);
+            console.log('finish time: ', finish_time);
         }
     };
 
@@ -110,7 +133,11 @@ export default function RecordScreen({navigation}) {
                         <TextInput 
                             onChangeText={onChangePlace}
                             value={place}
-                            style={styles.input_box}
+                            style={{
+                                ...styles.input_box, 
+                                borderColor: (validPlace ? styles.input_box.borderColor : 'red'),
+                                borderWidth: (validPlace ? styles.input_box.borderWidth : 1),
+                                }}
                         />
                     
                     </View>
@@ -127,9 +154,14 @@ export default function RecordScreen({navigation}) {
                 <View style={styles.container_button}>
                     <TouchableOpacity 
                         onPress={handleStartStop}
-                        style={styles.button}
+                        style={{
+                            ...styles.button,
+                            backgroundColor: (validTime ? styles.button.backgroundColor : 'red'),
+                        }}
                     >
-                        <Text style={styles.btn_text}>{isRunning ? "Stop" : "Start" }</Text>
+                        <Text 
+                            style={styles.btn_text}
+                        >{isRunning ? "Stop" : "Start" }</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         onPress={handleSubmit}
