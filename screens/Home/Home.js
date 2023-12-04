@@ -1,33 +1,45 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import "react-native-gesture-handler";
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CircularProgress from '../../Components/CircularProgress';
 
 const ID = "teamhot";
-const WELCOME_TEXT = "Good Morning,";
 const SCORE = 50;
 
 export default function Home({navigation}) {
 
-    // Get yesterday date
     const date = new Date();
+    let welcome_text = "Hello,"
+
+    // Get yesterday date.
+    const current_hour = date.getHours(); // Get current hour for welcome text.
     date.setDate(date.getDate() - 1);
     const yesterday = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-    
+
+    // Change the welcome message depending on the time.
+    if (6 <= current_hour && current_hour < 12){
+        welcome_text = "Good Morning,";
+    }else if (12 <= current_hour && current_hour < 18){
+        welcome_text = "Good Afternoon,";
+    }else if (18 <= current_hour && current_hour < 24){
+        welcome_text = "Good Evening,";
+    }else if (0 <= current_hour && current_hour < 6){
+        welcome_text = "Good Night,";
+    }
+
     return (
       <View style={styles.container_Home}>
 
         <View style={styles.header}>
             <View style={styles.welcome}>
-                <Text style={styles.welcome_text}>{WELCOME_TEXT}</Text>
+                <Text style={styles.welcome_text}>{welcome_text}</Text>
                 <Text style={styles.id_text}>{ID}</Text>
             </View>
             <View style={styles.watch_icon}>
                 <TouchableOpacity
-                    // onPress={() => {navigation.navigate('BluetoothScreen')}}
                 >
                     <View style={styles.icon_circle}>
                         <MaterialCommunityIcons name="watch-variant" size={24} color="#5B30E6" style={{position: 'absolute'}}/>
