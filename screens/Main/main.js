@@ -68,32 +68,12 @@ export default function Main() {
     
     return (
       <Tab.Navigator
-        screenOptions={({route})=>({
+        screenOptions={()=>({
           tabBarActiveTintColor: '#5B30E6',
           tabBarLabelStyle: {
             fontFamily: 'font-Medium',
             fontSize: 12,
-          }
-
-          // tabBarIcon: ({focused, color, size}) =>{
-          //   let iconName;
-  
-          //   if(route.name === "Home"){
-          //     iconName = "home";
-          //   }else if(route.name === "Statistics"){
-          //     iconName = "stats-chart";
-          //   }else if(route.name === "Recommend"){
-          //     iconName = "";
-          //   }else if(route.name === "Profile"){
-          //     iconName = "";
-          //   }
-
-          //   return(
-          //     <Entypo name="home" size={24} color="black" />
-          //     // <Ionicons name="stats-chart" size={24} color="black" />
-          //   );
-
-          // }
+          },
         })}
       >
         <Tab.Screen

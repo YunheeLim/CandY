@@ -28,23 +28,23 @@ export default function Profile({navigation}) {
         </Text>
       </View>
       <View style={styles.separator}></View>
-      <View style={styles.cell}>
+      <TouchableOpacity style={styles.cell}>
         <Text style={styles.sub_text}>
             Log out
         </Text>
         <TouchableOpacity>
             <Entypo name="chevron-right" size={20} color="grey" />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
       <View style={styles.separator}></View>
-      <View style={styles.cell}>
+      <TouchableOpacity style={styles.cell}>
         <Text style={{...styles.sub_text, color:"red"}}>
             Delete the account
         </Text>
         <TouchableOpacity>
         <Entypo name="chevron-right" size={20} color="grey" />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
       <View style={styles.separator}></View>
     </View>
   );
@@ -58,12 +58,12 @@ const styles = StyleSheet.create({
   },
   sub_text: {
     fontSize: 16,
-    fontWeight: '500',
+    fontFamily: 'font-Medium',
   },
   profile_text: {
     color: "black",
     fontSize: 20,
-    fontWeight:'500',
+    fontFamily: 'font-Bold',
   },
   separator: {
     height: 1,
