@@ -9,6 +9,8 @@ import Statistics from '../Statistics/Statistics';
 import DailyStatistics from '../Statistics/DailyStatistics';
 import Home from '../Home/Home';
 import RecordScreen from '../Record/Record';
+import { Entypo } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 
 import * as React from "react";
 import * as Font from "expo-font";
@@ -65,11 +67,70 @@ export default function Main() {
     const Tab = createBottomTabNavigator();
     
     return (
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name="Statistics" component={StatNavigator} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name="Recommend" component={RecommendScreen} options={{headerShown: false}}></Tab.Screen>
-        <Tab.Screen name="Profile" component={ProfileScreen} options={{headerShown: false}}></Tab.Screen>
+      <Tab.Navigator
+        screenOptions={({route})=>({
+          tabBarActiveTintColor: '#5B30E6',
+          tabBarLabelStyle: {
+            fontFamily: 'font-Medium',
+            fontSize: 12,
+          }
+
+          // tabBarIcon: ({focused, color, size}) =>{
+          //   let iconName;
+  
+          //   if(route.name === "Home"){
+          //     iconName = "home";
+          //   }else if(route.name === "Statistics"){
+          //     iconName = "stats-chart";
+          //   }else if(route.name === "Recommend"){
+          //     iconName = "";
+          //   }else if(route.name === "Profile"){
+          //     iconName = "";
+          //   }
+
+          //   return(
+          //     <Entypo name="home" size={24} color="black" />
+          //     // <Ionicons name="stats-chart" size={24} color="black" />
+          //   );
+
+          // }
+        })}
+      >
+        <Tab.Screen
+          name="Home" 
+          component={HomeScreen} 
+          options={{
+            headerShown: false, 
+            tabBarIcon: ({color, size}) => (<Entypo name="home" size={24} color={color}/>),
+          }}
+        />
+        <Tab.Screen 
+          name="Statistics" 
+          component={StatNavigator} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, size}) => (<Ionicons name="stats-chart" size={24} color={color} />),
+          }}
+        />
+        <Tab.Screen 
+          name="Recommend" 
+          component={RecommendScreen} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, size}) => (<Entypo name="thumbs-up" size={24} color={color} />),
+          }}
+        />
+        <Tab.Screen 
+          name="Profile" 
+          component={ProfileScreen} 
+          options={{
+            headerShown: false,
+            tabBarIcon: ({color, size}) => (<Ionicons name="person" size={24} color={color} />),
+          }}
+        />
       </Tab.Navigator>
     );
 }
+
+const styles = StyleSheet.create({
+});
