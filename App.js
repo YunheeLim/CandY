@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, LogBox } from 'react-native';
 import { useState, useEffect } from 'react';
 import LaunchScreen from './screens/onBoarding/LaunchScreen';
 import SignInScreen from './screens/onBoarding/SignInScreen';
@@ -16,6 +16,8 @@ import * as Font from "expo-font";
 // import mainFont from "./assets/Fonts";
 
 export default function App() {
+  // Disable all warnings
+  LogBox.ignoreAllLogs();
 
   const [isLoaded, setIsLoaded] = useState(false);
 
