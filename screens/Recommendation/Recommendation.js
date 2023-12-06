@@ -14,8 +14,8 @@ export default function Recommendation({navigation}) {
             <Text style={styles.recommendation_text}>
                 Recommendation     
             </Text>
-            <Text style={{...styles.sub_text, marginTop:10}}>
-                for your better Concentration!
+            <Text style={{...styles.sub_text, marginTop:10, fontFamily: 'font-Medium', fontSize: 15, color: 'grey'}}>
+                for your better concentration
             </Text>
        </View>
        <View style={styles.content_Container}>
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   recommendation_text: {
     color: "black",
     fontSize: 20,
-    fontWeight:'500',
+    fontFamily: 'font-Bold',
   },
   content_Container: {
     flex: 1,
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   section_text: {
-    fontSize: 18,
-    fontWeight: 400,
+    fontSize: 20,
+    fontFamily: 'font-SemiBold',
     marginTop: 25,
   },
   place_container: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   place_Description: {
     fontSize: 40,
     color: "#5B30E6",
-    fontWeight: 400,
+    fontFamily: 'font-Medium',
     alignSelf: "center",
     shadowOpacity: 0.3,
     shadowOffset: {width: 2, height: 2}
@@ -91,12 +91,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     flex: 1,
-    marginTop: -40
+    marginTop: -40,
   },
   time_Description: {
     fontSize: 40,
     color: "#5B30E6",
-    fontWeight: 400,
+    fontFamily: 'font-Medium',
     alignSelf: "center",
     shadowOpacity: 0.3,
     shadowOffset: {width: 2, height: 2}

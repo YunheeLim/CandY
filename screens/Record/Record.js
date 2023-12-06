@@ -86,10 +86,12 @@ export default function RecordScreen({navigation}) {
             setValidPlace(true);
             setValidTime(true);
 
-            // Reset the time and place.
+            // Reset all the values.
             setSeconds(0);
             setIsRunning(false);
             setPlace("");
+            setStartTime("");
+            setFinishTime("");
 
             // Make the date format in MySQL DATETIME foramt.
             const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
@@ -190,12 +192,12 @@ const styles = StyleSheet.create({
         marginVertical: 45,
     },
     arrow: {
-        marginRight: 50,
+        marginRight: 60,
     },
     header_text:{
         fontFamily: 'font-SemiBold',
-        fontSize: 25,
-        marginRight: 80,
+        fontSize: 22,
+        marginRight: 95,
     },
     body: {
         flex: 10,

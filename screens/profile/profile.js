@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { Image } from 'expo-image';
 import { Entypo } from '@expo/vector-icons';
 
@@ -28,7 +28,10 @@ export default function Profile({navigation}) {
         </Text>
       </View>
       <View style={styles.separator}></View>
-      <TouchableOpacity style={styles.cell}>
+      <TouchableOpacity 
+        onPress={() => navigation.popToTop()}
+        style={styles.cell}
+      >
         <Text style={styles.sub_text}>
             Log out
         </Text>
@@ -37,9 +40,22 @@ export default function Profile({navigation}) {
         </TouchableOpacity>
       </TouchableOpacity>
       <View style={styles.separator}></View>
-      <TouchableOpacity style={styles.cell}>
+      <TouchableOpacity 
+        onPress={() => Alert.alert('Are you sure?', 'Do you really want to delete your account?', [
+          {
+            text: 'No',
+            onPress: () => console.log('No'),
+            style: 'cancel',
+          },
+          {
+            text: 'Yes',
+            onPress: () => navigation.popToTop(),
+            style: 'destructive'
+        }])}
+        style={styles.cell}
+      >
         <Text style={{...styles.sub_text, color:"red"}}>
-            Delete the account
+            Delete my account
         </Text>
         <TouchableOpacity>
         <Entypo name="chevron-right" size={20} color="grey" />
@@ -83,5 +99,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 60,
     marginBottom: 20,
-  }
+  },
 });

@@ -12,14 +12,19 @@ const SCORE = 70;
 export default function Home({navigation}) {
 
     const date = new Date();
-    let welcome_text = "Hello,"
+
+    // Get current hour for welcome text.
+    const current_hour = date.getHours();
 
     // Get yesterday date.
-    const current_hour = date.getHours(); // Get current hour for welcome text.
-    date.setDate(date.getDate() - 1);
-    const yesterday = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    date.setDate(date.getDate() - 1)
+    const yesterday = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
 
+    // TODO: Sending the date date to DB.
+    
     // Change the welcome message depending on the time.
+    let welcome_text = "Hello,"
+
     if (6 <= current_hour && current_hour < 12){
         welcome_text = "Good Morning,";
     }else if (12 <= current_hour && current_hour < 18){

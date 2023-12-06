@@ -7,10 +7,12 @@ import Profile from "../profile/profile"
 import Recommendation from '../Recommendation/Recommendation';
 import Statistics from '../Statistics/Statistics';
 import DailyStatistics from '../Statistics/DailyStatistics';
+import LaunchScreen from '../onBoarding/LaunchScreen';
 import Home from '../Home/Home';
 import RecordScreen from '../Record/Record';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 
 import * as React from "react";
 import * as Font from "expo-font";
@@ -28,6 +30,12 @@ function HomeScreen() {
         <Stack.Screen name="DailyStatistics" component={DailyStatistics} options={({route}) => ({
           title: `${route.params.id}`,
           headerBackTitleVisible: false,
+          headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
+        })} />
+        <Stack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
+          title: `Session ${route.params.id}`,
+          headerBackTitleVisible: false,
+          headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
         })} />
       </Stack.Navigator>
     )
@@ -40,8 +48,11 @@ function HomeScreen() {
   }
   
   function ProfileScreen() {
+    const ProfileStack = createStackNavigator();
     return (
-      <Profile />
+      <ProfileStack.Navigator>
+        <ProfileStack.Screen name = "ProfileScreen" component={Profile} options={{headerShown: false}} />
+      </ProfileStack.Navigator>
     )
   }
   // Build Statistics Navigator Stack and Register the screens
@@ -54,11 +65,13 @@ function HomeScreen() {
         <StatStack.Screen name='DailyStatistics' component={DailyStatistics} options={({route}) => ({
           title: `${route.params.id}`,
           headerBackTitleVisible: false,
+          headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
         })} />
         {/* Get the information from previous screen */}
         <StatStack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
           title: `Session ${route.params.id}`,
           headerBackTitleVisible: false,
+          headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
         })} />
       </StatStack.Navigator>
     )
@@ -70,9 +83,13 @@ export default function Main() {
       <Tab.Navigator
         screenOptions={()=>({
           tabBarActiveTintColor: '#5B30E6',
+          tabBarIconStyle: {
+            marginTop: 7,
+          },
           tabBarLabelStyle: {
             fontFamily: 'font-Medium',
-            fontSize: 12,
+            fontSize: 10,
+            marginVertical: 2,
           },
         })}
       >

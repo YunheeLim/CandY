@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24
   },
   content_Container: {
-    flex: 1,
+    flex: 0.7,
     justifyContent: "space-around"
   },
   cell: {
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     borderColor: "#D0D0D0",
     justifyContent: "center",
     alignItems: "baseline",
-    marginVertical: 20,
+    marginVertical: 10,
   },
   section_text: {
     fontSize: 18,

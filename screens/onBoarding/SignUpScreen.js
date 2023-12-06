@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
   },
   title_text: {
     fontSize: 25,
-    fontFamily: 'font-Bold',
+    fontFamily: 'font-SemiBold',
   },
   body: {
     flex: 8,

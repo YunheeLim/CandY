@@ -40,11 +40,11 @@ export default function App() {
     return (
       // for changing pages
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="LaunchScreen">
+        <Stack.Navigator initialRouteName="LaunchScreen" screenOptions={{gestureEnabled: false}}>
           <Stack.Screen name="LaunchScreen" component={LaunchScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}/>
           <Stack.Screen name="SignUpScreen" component={SignUpScreen} options={{ headerShown: false }}/>
-          <Stack.Screen name="Main" component={Main} options={{headerShown: false}}/>
+          <Stack.Screen name="Main" component={Main} screenOptions={{gestureEnabled: false}} options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     );
