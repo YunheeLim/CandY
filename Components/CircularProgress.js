@@ -13,13 +13,13 @@ const data = [{
 
 
 
-export default function CircularProgress({radius=60}) { // The radius can be changed.
+export default function CircularProgress({percentage=50, radius=60}) { // The radius can be changed.
       return (
         <View style={styles.container}>
           <StatusBar hidden/>
           <View style={{flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center'}}>
             {data.map((p, i) => {
-              return <Donut key={i} percentage={p.percentage} color={p.color} delay={500 + 100 * i} max={p.max} radius={radius}/>
+              return <Donut key={i} percentage={percentage} color={p.color} delay={500 + 100 * i} max={p.max} radius={radius}/>
             })}
           </View>
         </View>

@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, Animated,Dimensions, ScrollView, Button } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
 
@@ -29,7 +30,7 @@ export default function DailyStatistics({navigation}) {
         <ScrollView style={{flex: 1,}}>
             {/* Using Data to make dynamic View */}
             {places.map((p, i) => {
-                return <View style={styles.cell_Session} key={p.key}>
+                return <TouchableOpacity style={styles.cell_Session} key={p.key} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
                 <Text style={styles.session_Text}>Session {i + 1}</Text>
                 <View style={{flexDirection:'row', marginTop: 10, justifyContent: "space-around"}}>
                     <Text style={styles.place}>{p.name}</Text>
@@ -39,7 +40,7 @@ export default function DailyStatistics({navigation}) {
                     <Entypo name="chevron-right" size={30} color="grey" />
                     </TouchableOpacity>
                 </View>
-            </View>
+            </TouchableOpacity>
             })}
             
         </ScrollView>
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24
   },
   content_Container: {
-    flex: 1,
+    flex: 0.7,
     justifyContent: "space-around"
   },
   cell: {
@@ -66,7 +67,6 @@ const styles = StyleSheet.create({
     borderColor: "#D0D0D0",
     justifyContent: "center",
     alignItems: "center",
-    
   },
   cell_Session: {
     flex: 1,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderColor: "#D0D0D0",
     justifyContent: "center",
     alignItems: "baseline",
-    marginVertical: 20,
+    marginVertical: 10,
   },
   section_text: {
     fontSize: 18,

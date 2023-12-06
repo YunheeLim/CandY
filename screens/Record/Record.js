@@ -1,27 +1,119 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import "react-native-gesture-handler";
 import { AntDesign } from '@expo/vector-icons';
 import * as React from "react";
 import * as Font from "expo-font";
-// import CircularProgress from 'react-native-circular-progress-indicator';
 
 
 export default function RecordScreen({navigation}) {
     
     // Manage values as states.
-    const [place, setPlace] = useState("");
+    const [place, setPlace] = useState(""); // The input data about where the user works
+    const [seconds, setSeconds] = useState(0); // The time the user working
+    const [isRunning, setIsRunning] = useState(false); // Whether the stop watch is active or not.
+    const [startTime, setStartTime] = useState(""); // The time when the user starts working.
+    const [finishTime, setFinishTime] = useState(""); // The time when the user ends working.
+    const [validPlace, setValidPlace] = useState(false); // Whether the where data exists or not.
+    const [validTime, setValidTime] = useState(false); // Whether the time data existes or not.
+    const [submitMode, setSubmitMode] = useState(false); // Turns true when the submit button is pressed.
 
     // Set values as the value is typed.
     const onChangePlace = (val) =>{
         setPlace(val);
     }
 
-    // make synchronize place value with onChangePlace function
+    // Count up the stop watch every second.
     useEffect(() => {
-        console.log(`Place: ${place}`);
-    }, [onChangePlace]);
+
+        let interval;
+
+        if (isRunning) {
+            interval = setInterval(() => {
+                setSeconds(seconds+ 1);
+            }, 1000);
+        }else if (!isRunning && (seconds !== 0)){
+            clearInterval(interval);
+        }
+        return ()=>clearInterval(interval);
+
+    }, [isRunning, seconds]);
+
+    // Manage the place value and submit state at the same time.
+    useEffect(() => {
+        if (place !== ""){
+            setValidPlace(true);
+        }else if (place === "" && !submitMode){
+            setValidPlace(true);
+        }
+    }, [place]);
+
+    useEffect(() => {
+        if(startTime !== ""){
+            setValidTime(true);
+        }else if(startTime === "" && !submitMode){
+            setValidTime(true);
+        }
+    }, [startTime]);
+
+    // Is called when the start/stop button is pressed.
+    const handleStartStop = () => {
+
+        // When the session starts.
+        if (seconds == 0){
+            // Make the date format in MySQL DATETIME foramt.
+            const start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            setStartTime(start_time);
+            console.log('start time: ', start_time);
+        }
+
+        setIsRunning(!isRunning);
+    };
+
+    // TODO: Sending the data to the server.
+    // Is called when the submit button is pressed.
+    const handleSubmit = () => {
+        setSubmitMode(true);
+
+        if (place === ""){
+            setValidPlace(false);
+        }
+        if (startTime === ""){
+            setValidTime(false);
+        }
+        if (place !== "" && startTime !== ""){
+            setValidPlace(true);
+            setValidTime(true);
+
+            // Reset all the values.
+            setSeconds(0);
+            setIsRunning(false);
+            setPlace("");
+            setStartTime("");
+            setFinishTime("");
+
+            // Make the date format in MySQL DATETIME foramt.
+            const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            setFinishTime(finish_time);
+            console.log('finish time: ', finish_time);
+        }
+    };
+
+    // Make the time in HH:MM:SS format.
+    const formatTime = ( time ) => {
+        // Parse milliseconds time to hours, minutes, seconds.
+        const hours = Math.floor(time / 3600);
+        const minutes = Math.floor((time % 3600) / 60);
+        const second = time % 60;
+
+        // Make digits of each element to 2.
+        const hourStr = String(hours).padStart(2, '0');
+        const minuteStr = String(minutes).padStart(2, '0');
+        const secondStr = String(second).padStart(2, '0');
+
+        return (`${hourStr} : ${minuteStr} : ${secondStr}`);
+    }
 
     return (
         <View style={styles.container_RecordScreen}>
@@ -39,27 +131,45 @@ export default function RecordScreen({navigation}) {
             <View style={styles.body}>
                 <View style={styles.container_where}>
                     <Text style={styles.where_text}>Where?</Text>
-                    <TextInput 
-                        onChangeText={onChangePlace}
-                        value={place}
-                        style={styles.input_box}
-                    />
+                    <View>
+                        <TextInput 
+                            onChangeText={onChangePlace}
+                            value={place}
+                            style={{
+                                ...styles.input_box, 
+                                borderColor: (validPlace ? styles.input_box.borderColor : 'red'),
+                                borderWidth: (validPlace ? styles.input_box.borderWidth : 1),
+                                }}
+                        />
+                    
+                    </View>
                 </View>
 
                 <View style={styles.container_timer}>
                     <View style={styles.circle_outside}>
                         <View style={styles.circle_inside}>
-                            <Text style={styles.timer_text}>00:00:00</Text>
+                            <Text style={styles.timer_text}>{formatTime(seconds)}</Text>
                         </View>
                     </View>
                 </View>
 
                 <View style={styles.container_button}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.btn_text}>Start</Text>
+                    <TouchableOpacity 
+                        onPress={handleStartStop}
+                        style={{
+                            ...styles.button,
+                            backgroundColor: (validTime ? styles.button.backgroundColor : 'red'),
+                        }}
+                    >
+                        <Text 
+                            style={styles.btn_text}
+                        >{isRunning ? "Stop" : "Start" }</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.btn_text}>Finish</Text>
+                    <TouchableOpacity 
+                        onPress={handleSubmit}
+                        style={styles.button}
+                    >
+                        <Text style={styles.btn_text}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -79,15 +189,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginVertical: 50,
+        marginVertical: 45,
     },
     arrow: {
-        marginRight: 50,
+        marginRight: 60,
     },
     header_text:{
-        fontFamily: 'font-Bold',
-        fontSize: 25,
-        marginRight: 80,
+        fontFamily: 'font-SemiBold',
+        fontSize: 22,
+        marginRight: 95,
     },
     body: {
         flex: 10,

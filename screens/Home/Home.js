@@ -1,33 +1,50 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import "react-native-gesture-handler";
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CircularProgress from '../../Components/CircularProgress';
 
 const ID = "teamhot";
-const WELCOME_TEXT = "Good Morning,";
-const SCORE = 50;
+const SCORE = 70;
 
 export default function Home({navigation}) {
 
-    // Get yesterday date
     const date = new Date();
-    date.setDate(date.getDate() - 1);
-    const yesterday = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+
+    // Get current hour for welcome text.
+    const current_hour = date.getHours();
+
+    // Get yesterday date.
+    date.setDate(date.getDate() - 1)
+    const yesterday = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+
+    // TODO: Sending the date date to DB.
     
+    // Change the welcome message depending on the time.
+    let welcome_text = "Hello,"
+
+    if (6 <= current_hour && current_hour < 12){
+        welcome_text = "Good Morning,";
+    }else if (12 <= current_hour && current_hour < 18){
+        welcome_text = "Good Afternoon,";
+    }else if (18 <= current_hour && current_hour < 24){
+        welcome_text = "Good Evening,";
+    }else if (0 <= current_hour && current_hour < 6){
+        welcome_text = "Good Night,";
+    }
+
     return (
       <View style={styles.container_Home}>
 
         <View style={styles.header}>
             <View style={styles.welcome}>
-                <Text style={styles.welcome_text}>{WELCOME_TEXT}</Text>
+                <Text style={styles.welcome_text}>{welcome_text}</Text>
                 <Text style={styles.id_text}>{ID}</Text>
             </View>
             <View style={styles.watch_icon}>
                 <TouchableOpacity
-                    // onPress={() => {navigation.navigate('BluetoothScreen')}}
                 >
                     <View style={styles.icon_circle}>
                         <MaterialCommunityIcons name="watch-variant" size={24} color="#5B30E6" style={{position: 'absolute'}}/>
@@ -44,7 +61,7 @@ export default function Home({navigation}) {
             >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
                 <Text style={styles.for_yesterday_text}>for yesterday</Text>            
-                <CircularProgress radius={80} />
+                <CircularProgress percentage={SCORE} radius={80} />
             </TouchableOpacity>
             <View style={styles.container_record}>
                 <TouchableOpacity 
@@ -115,11 +132,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 18,
         paddingHorizontal: 30,
+        marginTop: 25,
         height: 240,
         flexShrink: 0,
         borderWidth: 0.5,
         borderStyle: "solid",
-        borderColor: "#D0D0D0",   
+        borderColor: "#D0D0D0",
     },
     concentration_score_text: {
         marginTop: 20,
@@ -136,8 +154,8 @@ const styles = StyleSheet.create({
         color: 'grey',
     },
     container_record: {
-        flex: 1,
         justifyContent: 'center',
+        marginVertical: 80,
     },
     record_btn: {
         backgroundColor: '#000',
