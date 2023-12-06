@@ -21,23 +21,23 @@ import SessionStatistics from '../Statistics/SessionStatistics';
 
 function HomeScreen() {
 
-    const Stack = createStackNavigator();
+    const HomeStack = createStackNavigator();
 
     return (
-      <Stack.Navigator initialRouteName="HomeScreen">
-        <Stack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }}/>
-        <Stack.Screen name="RecordScreen" component={RecordScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="DailyStatistics" component={DailyStatistics} options={({route}) => ({
+      <HomeStack.Navigator initialRouteName="HomeScreen">
+        <HomeStack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }}/>
+        <HomeStack.Screen name="RecordScreen" component={RecordScreen} options={{ headerShown: false }}/>
+        <HomeStack.Screen name="DailyStatistics" component={DailyStatistics} options={({route}) => ({
           title: `${route.params.id}`,
           headerBackTitleVisible: false,
           headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
         })} />
-        <Stack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
+        <HomeStack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
           title: `Session ${route.params.id}`,
           headerBackTitleVisible: false,
           headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
         })} />
-      </Stack.Navigator>
+      </HomeStack.Navigator>
     )
   }
   

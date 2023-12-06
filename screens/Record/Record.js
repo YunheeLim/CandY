@@ -5,6 +5,7 @@ import "react-native-gesture-handler";
 import { AntDesign } from '@expo/vector-icons';
 import * as React from "react";
 import * as Font from "expo-font";
+import axios from 'axios';
 
 
 export default function RecordScreen({navigation}) {
@@ -73,7 +74,7 @@ export default function RecordScreen({navigation}) {
 
     // TODO: Sending the data to the server.
     // Is called when the submit button is pressed.
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setSubmitMode(true);
 
         if (place === ""){
@@ -83,6 +84,11 @@ export default function RecordScreen({navigation}) {
             setValidTime(false);
         }
         if (place !== "" && startTime !== ""){
+            // Make the date format in MySQL DATETIME foramt.
+            const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            setFinishTime(finish_time);
+            console.log('finish time: ', finish_time);
+
             setValidPlace(true);
             setValidTime(true);
 
@@ -93,10 +99,27 @@ export default function RecordScreen({navigation}) {
             setStartTime("");
             setFinishTime("");
 
-            // Make the date format in MySQL DATETIME foramt.
-            const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
-            setFinishTime(finish_time);
-            console.log('finish time: ', finish_time);
+
+            const sending_data = {
+                "user_id": "HoT",
+                "session_place": place, 
+                "session_start_time": startTime, 
+                "session_end_time": finishTime
+            }
+
+            // Send data to the server.
+            axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
+            .then((response)=>{
+                console.log(response.data);
+            });
+
+            // try{
+            //     const response = await axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data);
+            //     console.log(response.data);
+            // } catch (error) {
+            //     console.log(error);
+            // }
+
         }
     };
 
