@@ -12,6 +12,7 @@ const SCORE = 70;
 
 export default function Home({navigation}) {
     const [id, setId] = useState("");
+    const [score, setScore] = useState(0);
     // Get data from the server.
     axios({
         method: 'get',
@@ -20,7 +21,15 @@ export default function Home({navigation}) {
         ID = response.data.user_id;
         setId(ID);
       }).catch(error => console.log(error));
-
+    axios({
+    method: "get",
+    url: "http://192.168.2.212/CandY_Server/Yesterday_Avg/",
+    })
+    .then((response) => {
+        console.log(response.data);
+        setScore(response.data.yesterday_concentration_avg);
+    })
+    .catch((error) => console.log(error));
     const date = new Date();
 
     // Get current hour for welcome text.
@@ -51,7 +60,7 @@ export default function Home({navigation}) {
         <View style={styles.header}>
             <View style={styles.welcome}>
                 <Text style={styles.welcome_text}>{welcome_text}</Text>
-                <Text style={styles.id_text}>{ID}</Text>
+                <Text style={styles.id_text}>{id}</Text>
             </View>
             <View style={styles.watch_icon}>
                 <TouchableOpacity
@@ -71,7 +80,7 @@ export default function Home({navigation}) {
             >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
                 <Text style={styles.for_yesterday_text}>for yesterday</Text>            
-                <CircularProgress percentage={SCORE} radius={80} />
+                <CircularProgress percentage={score} radius={80} />
             </TouchableOpacity>
             <View style={styles.container_record}>
                 <TouchableOpacity 

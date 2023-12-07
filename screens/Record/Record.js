@@ -108,17 +108,12 @@ export default function RecordScreen({navigation}) {
             }
 
             // Send data to the server.
-            axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
-            .then((response)=>{
-                console.log(response.data);
-            });
-
-            // try{
-            //     const response = await axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data);
+            // axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
+            // .then((response)=>{
             //     console.log(response.data);
-            // } catch (error) {
-            //     console.log(error);
-            // }
+            // });
+
+
 
         }
     };
