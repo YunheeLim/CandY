@@ -4,18 +4,35 @@ import { Entypo } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
+import axios from 'axios';
 
-// Todo: Dummy data
-const places = [
-    {key: 1, name:"Starbucks", times:"10:00 a.m."}, 
-    {key: 2, name:"K-Sqaure", times:"1:34 p.m."}, 
-    {key: 3, name:"Lark", times:"9:54 p.m."}
-];
-const concentValue = 50;
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
+
 export default function DailyStatistics({navigation}) {
+  const [concentValue, setConcentValue] = React.useState(0); 
+  const [userId, setUserId] = React.useState("");
+  const [dailySessions, setDailySessions] = React.useState([]);
+
+
+axios({
+  method: 'get',
+  url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+}).then((response) => {
+  ID = response.data.user_id
+  setUserId(ID);
+  axios({
+    method: 'get',
+    // url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${id}/`,
+    url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/2023-12-06/`,
+  }).then((response) => {
+    score = response.data.day_concentration_avg
+    sessions = response.data.Daily_Report_All
+    setConcentValue(score);
+    setDailySessions(sessions);
+  }).catch(error => console.log(error));
+}).catch(error => console.log(error));
 
   return (
     <View style={styles.container_Stat}>
@@ -24,23 +41,23 @@ export default function DailyStatistics({navigation}) {
             <View style={styles.cell}>
                 <Text style={styles.section_text}>Concentration Score</Text>
                 <Text style={styles.section_subText}>on average</Text>
-                <CircularProgress/>
+                <CircularProgress percentage={concentValue}/>
             </View>
         </View>
         <ScrollView style={{flex: 1,}}>
             {/* Using Data to make dynamic View */}
-            {places.map((p, i) => {
-                return <TouchableOpacity style={styles.cell_Session} key={p.key} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
+            {dailySessions.map((p, i) => {
+                return (<TouchableOpacity style={styles.cell_Session} key={p.session_id} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
                 <Text style={styles.session_Text}>Session {i + 1}</Text>
                 <View style={{flexDirection:'row', marginTop: 10, justifyContent: "space-around"}}>
-                    <Text style={styles.place}>{p.name}</Text>
-                    <Text style={styles.time}>{p.times}</Text>
+                    <Text style={styles.place}>{p.session_place}</Text>
+                    <Text style={styles.time}>{p.session_start_time}</Text>
                     <View style={{flex:2}}></View>
                     <TouchableOpacity style={{flex:0}} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
                     <Entypo name="chevron-right" size={30} color="grey" />
                     </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity>)
             })}
             
         </ScrollView>
