@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, Animated,Dimensions, ScrollVi
 import { Entypo } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
+import axios from 'axios';
 
 // Todo: Dummy data
 const places = [
@@ -15,7 +16,27 @@ const places = [
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 export default function SessionStatistics({route}) {
+  const [sessionData, setSessionData] = React.useState({});
+  const [concentValue, setConcentValue] = React.useState(0); 
+  const [userId, setUserId] = React.useState("");
 
+  axios({
+    method: 'get',
+    url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+  }).then((response) => {
+    ID = response.data.user_id
+    setUserId(ID);
+    console.log(userId)
+    axios({
+      method: 'get',
+      url: `http://192.168.2.212/CandY_Server/Session_Report/${userId}/13/`,
+    }).then((response) => {
+      sessionsDatas = response.data.Session_Data_Avg
+      setSessionData(sessionsDatas);
+      console.log(sessionData.dictionary);
+    }).catch(error => console.log(error));
+  }).catch(error => console.log(error));
+  
   return (
     <View style={styles.container_Stat}>
         <StatusBar style="auto"></StatusBar>
@@ -27,17 +48,17 @@ export default function SessionStatistics({route}) {
         </View>
         <ScrollView style={{flex: 1,}}>
             {/* Usign data to build dynamic View */}
-            {places.map((p, i) => {
-                return <View style={styles.cell_Session} key={p.key}>
-                <Text style={styles.session_Text}>{p.name}</Text>
+            {/*sessionData.map((p, i) => {
+                return <View style={styles.cell_Session} key={i}>
+                <Text style={styles.session_Text}>{p[0]}</Text>
                 <View style={{flexDirection:'row', marginTop: 10, justifyContent: "space-around"}}>
                     <Text style={styles.place}>{p.value}</Text>
-                    {/* Nested ternary operator */}
+                    
                     <Text style={styles.time}>{p.name === "HR" ? "bpm": p.name === "HRV" ? "ms": p.name === "EDA" ? "µS" : "hours"}</Text>
                     <View style={{flex:2}}></View>
                 </View>
             </View>
-            })}
+            })*/}
             
         </ScrollView>
     </View>
