@@ -15,25 +15,26 @@ export default function DailyStatistics({navigation, route}) {
   const [userId, setUserId] = React.useState("");
   const [dailySessions, setDailySessions] = React.useState([]);
 
+  React.useEffect(()=>{
 
-axios({
-  method: 'get',
-  url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
-}).then((response) => {
-  ID = response.data.user_id
-  setUserId(ID);
-  axios({
-    method: 'get',
-    // url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${id}/`,
-    url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${route.params.id}/`,
-  }).then((response) => {
-    console.log(`http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${route.params.id}/`)
-    score = response.data.day_concentration_avg
-    sessions = response.data.Daily_Report_All
-    setConcentValue(score);
-    setDailySessions(sessions);
-  }).catch(error => console.log(error));
-}).catch(error => console.log(error));
+    axios({
+      method: 'get',
+      url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+    }).then((response) => {
+      setUserId(response.data.user_id);
+      axios({
+        method: 'get',
+        url: `http://192.168.2.212/CandY_Server/Daily_Report/${response.data.user_id}/${route.params.id}/`,
+      }).then((response) => {
+        if(response.data.result){
+          setConcentValue(response.data.day_concentration_avg);
+          setDailySessions(response.data.Daily_Report_All);
+        }
+      }).catch(error => console.log(error));
+
+    }).catch(error => console.log(error));
+
+  }, []);
 
   return (
     <View style={styles.container_Stat}>
@@ -47,6 +48,7 @@ axios({
         </View>
         <ScrollView style={{flex: 1,}}>
             {/* Using Data to make dynamic View */}
+            
             {dailySessions.map((p, i) => {
                 return (<TouchableOpacity style={styles.cell_Session} key={p.session_id} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
                 <Text style={styles.session_Text}>Session {i + 1}</Text>
