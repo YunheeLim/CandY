@@ -10,7 +10,7 @@ import axios from 'axios';
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 
-export default function DailyStatistics({navigation}) {
+export default function DailyStatistics({navigation, route}) {
   const [concentValue, setConcentValue] = React.useState(0); 
   const [userId, setUserId] = React.useState("");
   const [dailySessions, setDailySessions] = React.useState([]);
@@ -25,8 +25,9 @@ axios({
   axios({
     method: 'get',
     // url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${id}/`,
-    url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/2023-12-06/`,
+    url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${route.params.id}/`,
   }).then((response) => {
+    console.log(`http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${route.params.id}/`)
     score = response.data.day_concentration_avg
     sessions = response.data.Daily_Report_All
     setConcentValue(score);
