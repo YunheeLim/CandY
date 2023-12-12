@@ -32,6 +32,7 @@ axios({
   }).catch(error => console.log(error));
 }).catch(error => console.log(error));
 
+
   return (
     <View style={styles.container_Stat}>
         <StatusBar style="auto"></StatusBar>
@@ -44,6 +45,7 @@ axios({
         </View>
         <ScrollView style={{flex: 1,}}>
             {/* Using Data to make dynamic View */}
+            
             {dailySessions.map((p, i) => {
                 return (<TouchableOpacity style={styles.cell_Session} key={p.session_id} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
                 <Text style={styles.session_Text}>Session {i + 1}</Text>
