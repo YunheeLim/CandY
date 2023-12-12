@@ -14,6 +14,7 @@ export default function Home({navigation}) {
     const [id, setId] = useState("");
     const [score, setScore] = useState(0);
     // Get data from the server.
+
     axios({
         method: 'get',
         url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
@@ -29,6 +30,7 @@ export default function Home({navigation}) {
         setScore(response.data.yesterday_concentration_avg);
     })
     .catch((error) => console.log(error));
+
     const date = new Date();
 
     // Get current hour for welcome text.
