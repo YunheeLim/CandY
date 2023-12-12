@@ -3,37 +3,71 @@ import { StyleSheet, Text, View, TouchableOpacity, Animated,Dimensions, ScrollVi
 import { Entypo } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
+import axios from 'axios';
 
-// Todo: Dummy data
-const places = [
-    {key: 1, name:"HR", value:"97"}, 
-    {key: 2, name:"HRV", value:"36"}, 
-    {key: 3, name:"EDA", value:"97"},
-    {key: 4, name:"Sleep Duration", value:"8"}
-];
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 export default function SessionStatistics({route}) {
-
+  const [sessionData, setSessionData] = React.useState({});
+  const [concentValue, setConcentValue] = React.useState(0); 
+  const [userId, setUserId] = React.useState("");
+  // trim the data that recieved from the server.
+  const trimData = (data) => {
+    let newData = {}
+    Object.keys(data).map((key) => {
+      if(key === "hr") {
+        newData["HR"] = data["hr"]
+      } else if (key === "hrv") {
+        newData["HRV"] = data["hrv"]
+      } else if (key === "coherence") {
+        newData["Coherence"] = data["coherence"]
+      } else if (key === "body_movement") {
+        newData["Body Movement"] = data["body_movement"]
+      } else if (key === "eda") {
+        newData["EDA"] = data["eda"]
+      } else if (key === "deep_sleep_minutes") {
+        newData["Deep Sleep"] = data["deep_sleep_minutes"]
+      } else if (key === "wrist_temperature") {
+        newData["Wrist Temperature Variability"] = data["wrist_temperature"]
+      }
+    })
+    return newData;
+  }
+  // Get UserID, Get Session Report
+  axios({
+    method: 'get',
+    url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+  }).then((response) => {
+    ID = response.data.user_id
+    setUserId(ID);
+    axios({
+      method: 'get',
+      url: `http://192.168.2.212/CandY_Server/Session_Report/${userId}/${route.params.id}/`,
+    }).then((response) => {
+      sessionsDatas = response.data.Session_Data_Avg
+      setConcentValue(sessionsDatas.session_concentration_avg)
+      setSessionData(trimData(sessionsDatas))
+    }).catch(error => console.log(error));
+  }).catch(error => console.log(error));
+  
   return (
     <View style={styles.container_Stat}>
         <StatusBar style="auto"></StatusBar>
         <View style={styles.content_Container}>
             <View style={styles.cell}>
                 <Text style={styles.section_text}>Concentration Score</Text>
-                <CircularProgress/>
+                <CircularProgress percentage={concentValue}/>
             </View>
         </View>
         <ScrollView style={{flex: 1,}}>
             {/* Usign data to build dynamic View */}
-            {places.map((p, i) => {
-                return <View style={styles.cell_Session} key={p.key}>
-                <Text style={styles.session_Text}>{p.name}</Text>
+            {Object.keys(sessionData).map((key) => {
+                return <View style={styles.cell_Session} key={key}>
+                <Text style={styles.session_Text}>{key}</Text>
                 <View style={{flexDirection:'row', marginTop: 10, justifyContent: "space-around"}}>
-                    <Text style={styles.place}>{p.value}</Text>
-                    {/* Nested ternary operator */}
-                    <Text style={styles.time}>{p.name === "HR" ? "bpm": p.name === "HRV" ? "ms": p.name === "EDA" ? "µS" : "hours"}</Text>
+                    <Text style={styles.place}>{Math.round(sessionData[key])}</Text>
+                    <Text style={styles.time}>{key === "HR" ? "bpm": key === "HRV" ? "ms": key === "EDA" ? "µS" : key === "Deep Sleep" ? "mins" : key === "Wrist Temperature Variability" ? "" : key === "Body Movement" ? "mins": ""}</Text>
                     <View style={{flex:2}}></View>
                 </View>
             </View>

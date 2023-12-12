@@ -9,6 +9,7 @@ import Statistics from '../Statistics/Statistics';
 import DailyStatistics from '../Statistics/DailyStatistics';
 import LaunchScreen from '../onBoarding/LaunchScreen';
 import Home from '../Home/Home';
+import Bluetooth from '../Home/Bluetooth';
 import RecordScreen from '../Record/Record';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
@@ -37,6 +38,11 @@ function HomeScreen() {
           headerBackTitleVisible: false,
           headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
         })} />
+        <HomeStack.Screen name='Bluetooth' component={Bluetooth} options={({route}) => ({
+          title: "Fitbit Device",
+          headerBackTitleVisible: false,
+          headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>)
+        })}/>
       </HomeStack.Navigator>
     )
   }

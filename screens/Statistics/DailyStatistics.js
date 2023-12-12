@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, Animated,Dimensions, ScrollView, Button } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
 import axios from 'axios';
@@ -15,26 +14,24 @@ export default function DailyStatistics({navigation, route}) {
   const [userId, setUserId] = React.useState("");
   const [dailySessions, setDailySessions] = React.useState([]);
 
-  React.useEffect(()=>{
+// Get UserID, Get User's sessions
+axios({
+  method: 'get',
+  url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+}).then((response) => {
+  ID = response.data.user_id
+  setUserId(ID);
+  axios({
+    method: 'get',
+    url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${route.params.id}/`,
+  }).then((response) => {
+    score = response.data.day_concentration_avg
+    sessions = response.data.Daily_Report_All
+    setConcentValue(score);
+    setDailySessions(sessions);
+  }).catch(error => console.log(error));
+}).catch(error => console.log(error));
 
-    axios({
-      method: 'get',
-      url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
-    }).then((response) => {
-      setUserId(response.data.user_id);
-      axios({
-        method: 'get',
-        url: `http://192.168.2.212/CandY_Server/Daily_Report/${response.data.user_id}/${route.params.id}/`,
-      }).then((response) => {
-        if(response.data.result){
-          setConcentValue(response.data.day_concentration_avg);
-          setDailySessions(response.data.Daily_Report_All);
-        }
-      }).catch(error => console.log(error));
-
-    }).catch(error => console.log(error));
-
-  }, []);
 
   return (
     <View style={styles.container_Stat}>

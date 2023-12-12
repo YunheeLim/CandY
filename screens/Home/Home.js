@@ -14,24 +14,22 @@ export default function Home({navigation}) {
     const [id, setId] = useState("");
     const [score, setScore] = useState(0);
     // Get data from the server.
-    useEffect(() => {
-        axios({
-            method: 'get',
-            url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
-          }).then((response) => {
-            ID = response.data.user_id;
-            setId(ID);
-          }).catch(error => console.log(error));
-        axios({
-        method: "get",
-        url: "http://192.168.2.212/CandY_Server/Yesterday_Avg/",
-        })
-        .then((response) => {
-            console.log(response.data);
-            setScore(response.data.yesterday_concentration_avg);
-        })
-        .catch((error) => console.log(error));
-    }, []);
+
+    axios({
+        method: 'get',
+        url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+      }).then((response) => {
+        ID = response.data.user_id;
+        setId(ID);
+      }).catch(error => console.log(error));
+    axios({
+    method: "get",
+    url: "http://192.168.2.212/CandY_Server/Today_Avg/",
+    })
+    .then((response) => {
+        setScore(response.data.yesterday_concentration_avg);
+    })
+    .catch((error) => console.log(error));
 
     const date = new Date();
 
@@ -67,6 +65,7 @@ export default function Home({navigation}) {
             </View>
             <View style={styles.watch_icon}>
                 <TouchableOpacity
+                onPress={() => navigation.navigate('Bluetooth')}
                 >
                     <View style={styles.icon_circle}>
                         <MaterialCommunityIcons name="watch-variant" size={24} color="#5B30E6" style={{position: 'absolute'}}/>
@@ -82,7 +81,7 @@ export default function Home({navigation}) {
                 onPress={() => navigation.navigate('DailyStatistics', {id: yesterday, navigation: navigation})}
             >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
-                <Text style={styles.for_yesterday_text}>for yesterday</Text>            
+                <Text style={styles.for_yesterday_text}>for today</Text>            
                 <CircularProgress percentage={score} radius={80} />
             </TouchableOpacity>
             <View style={styles.container_record}>
@@ -90,7 +89,7 @@ export default function Home({navigation}) {
                     onPress={() => navigation.navigate('RecordScreen')}
                     style={styles.record_btn}
                 >
-                    <Text style={styles.record_text}>Record Working</Text>                    
+                    <Text style={styles.record_text}>Record Task</Text>                    
                 </TouchableOpacity>
 
             </View>
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 18,
-        paddingHorizontal: 30,
+        paddingHorizontal: 50,
         marginTop: 25,
         height: 240,
         flexShrink: 0,

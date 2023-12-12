@@ -67,7 +67,7 @@ export default function RecordScreen({navigation}) {
             const start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setStartTime(start_time);
             console.log('start time: ', start_time);
-        }
+        } 
 
         setIsRunning(!isRunning);
     };
@@ -92,28 +92,28 @@ export default function RecordScreen({navigation}) {
             setValidPlace(true);
             setValidTime(true);
 
-            // Reset all the values.
-            setSeconds(0);
-            setIsRunning(false);
-            setPlace("");
-            setStartTime("");
-            setFinishTime("");
-
-
             const sending_data = {
                 "user_id": "HoT",
                 "session_place": place, 
                 "session_start_time": startTime, 
-                "session_end_time": finishTime
+                "session_end_time": finish_time
             }
-
+            setTimeout(()=> {
+                axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
+            .then((response)=>{
+                console.log(response.data);
+                setSeconds(0);
+                setIsRunning(false);
+                setPlace("");
+                setStartTime("");
+                setFinishTime("");
+            });
+            }, 1000)
             // Send data to the server.
-            // axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
-            // .then((response)=>{
-            //     console.log(response.data);
-            // });
+            
 
-
+            // Reset all the values.
+           
 
         }
     };
