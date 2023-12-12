@@ -3,11 +3,23 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, Platform , Button, 
 import * as React from "react";
 import {Calendar} from 'react-native-calendars';
 import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
+import axios from 'axios';
 
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 // Calendar Component
-const MyCalendar = ({navigation}) => {
+const MyCalendar = ({navigation, sessionList, userId}) => {
+    let sessionDates = []
+    // Create the object that can use in the calendar
+    if (sessionList !== null) {
+        sessionDates = sessionList.reduce((acc, date) => {
+            acc[date] = {marked: true};
+            return acc
+        }, {});
+    } else {
+        sessionDates = ["2023-12-24", "2023-12-25"];
+    }
+    
     return (
         <View style={styles.container}> 
             <Calendar 
@@ -15,12 +27,7 @@ const MyCalendar = ({navigation}) => {
                 onDayPress={(day) => navigation.navigate("DailyStatistics", {id: day.dateString, navigation: navigation})}
                 // Just Dummy Data
                 markedDates={{ 
-                    '2023-11-17': { selected: true}, 
-                    '2023-11-18': { selected: true }, 
-                    '2023-11-19': { 
-                        selected: true,
-                        activeOpacity: 0
-                    }, 
+                    ...sessionDates
                 }} 
                 theme={{ 
                     backgroundColor: '#ffffff', 
@@ -31,8 +38,8 @@ const MyCalendar = ({navigation}) => {
                     todayTextColor: '#9F81F7',
                     dayTextColor: '#2d4150', 
                     textDisabledColor: '#d9e1e8', 
-                    dotColor: '#00adf5', 
-                    selectedDotColor: '#ffffff', 
+                    dotColor: '#9F81F7', 
+                    selectedDotColor: '#9F81F7', 
                     arrowColor: 'black', 
                     monthTextColor: 'black', 
                     indicatorColor: 'blue', 
@@ -50,6 +57,11 @@ const MyCalendar = ({navigation}) => {
                         alignItems: "center",
                         justifyContent: "center",
                     },
+                    dotStyle: {
+                        width: 10,
+                        height: 10,
+                        borderRadius: 5
+                    },
                     'stylesheet.day.basic': {
                         // Modifying the Day Style
                         'base': {
@@ -57,7 +69,7 @@ const MyCalendar = ({navigation}) => {
                             height: 50,
                             alignItems: "center",
                             justifyContent: 'center',
-                        }
+                        },
                     },
 
                 }} 
@@ -72,6 +84,30 @@ const MyCalendar = ({navigation}) => {
 }
 
 export default function Statistics({navigation}) {
+    const [userId, setUserId] = React.useState("");
+    const [monthlySessions, setMonthlySessions] = React.useState([]);
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    const formattedDate = `${year}-${month}`;
+    const [monthDate, setMonthDate] = React.useState(Date.now().toString());
+
+    // Get UserID, Get User's all the sessions
+    axios({
+        method: 'get',
+        url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+      }).then((response) => {
+        ID = response.data.user_id
+        setUserId(ID);
+        setMonthDate(formattedDate);
+        axios({
+          method: 'get',
+          url: `http://192.168.2.212/CandY_Server/User_Session_All/${userId}/`,
+        }).then((response) => {
+          monthlyData = response.data.User_Session_All
+          setMonthlySessions(monthlyData);
+        }).catch(error => console.log(error));
+      }).catch(error => console.log(error));
     return (
         <View style={{  
             flex: 1,  
@@ -81,7 +117,7 @@ export default function Statistics({navigation}) {
         }}> 
             <ExpoStatusBar style='auto' />
             {/* transfer navigation variables to Calendar */}
-            <MyCalendar navigation={navigation} /> 
+            <MyCalendar navigation={navigation} sessionList={monthlySessions} userId={userId} /> 
         </View>
     );
 }
