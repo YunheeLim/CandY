@@ -79,7 +79,7 @@ export default function Home({navigation}) {
                 onPress={() => navigation.navigate('DailyStatistics', {id: yesterday, navigation: navigation})}
             >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
-                {/* <Text style={styles.for_yesterday_text}>for yesterday</Text>             */}
+                <Text style={styles.for_yesterday_text}>for today</Text>            
                 <CircularProgress percentage={score} radius={80} />
             </TouchableOpacity>
             <View style={styles.container_record}>
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 18,
-        paddingHorizontal: 70,
+        paddingHorizontal: 50,
         marginTop: 25,
         height: 240,
         flexShrink: 0,
