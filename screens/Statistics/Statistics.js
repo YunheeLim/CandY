@@ -93,21 +93,24 @@ export default function Statistics({navigation}) {
     const [monthDate, setMonthDate] = React.useState(Date.now().toString());
 
     // Get UserID, Get User's all the sessions
-    axios({
-        method: 'get',
-        url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
-      }).then((response) => {
-        ID = response.data.user_id
-        setUserId(ID);
-        setMonthDate(formattedDate);
+    React.useEffect(()=>{
         axios({
-          method: 'get',
-          url: `http://192.168.2.212/CandY_Server/User_Session_All/${userId}/`,
-        }).then((response) => {
-          monthlyData = response.data.User_Session_All
-          setMonthlySessions(monthlyData);
-        }).catch(error => console.log(error));
-      }).catch(error => console.log(error));
+            method: 'get',
+            url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+          }).then((response) => {
+            ID = response.data.user_id
+            setUserId(ID);
+            setMonthDate(formattedDate);
+            axios({
+              method: 'get',
+              url: `http://192.168.2.212/CandY_Server/User_Session_All/${response.data.user_id}/`,
+            }).then((response) => {
+              monthlyData = response.data.User_Session_All
+              setMonthlySessions(monthlyData);
+            }).catch(error => console.log(error));
+          }).catch(error => console.log(error));
+    },[])
+    
     return (
         <View style={{  
             flex: 1,  

@@ -15,23 +15,24 @@ export default function DailyStatistics({navigation, route}) {
   const [dailySessions, setDailySessions] = React.useState([]);
 
 // Get UserID, Get User's sessions
-axios({
-  method: 'get',
-  url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
-}).then((response) => {
-  ID = response.data.user_id
-  setUserId(ID);
+React.useEffect(()=>{
   axios({
     method: 'get',
-    url: `http://192.168.2.212/CandY_Server/Daily_Report/${userId}/${route.params.id}/`,
+    url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
   }).then((response) => {
-    score = response.data.day_concentration_avg
-    sessions = response.data.Daily_Report_All
-    setConcentValue(score);
-    setDailySessions(sessions);
+    ID = response.data.user_id
+    setUserId(ID);
+    axios({
+      method: 'get',
+      url: `http://192.168.2.212/CandY_Server/Daily_Report/${response.data.user_id}/${route.params.id}/`,
+    }).then((response) => {
+      score = response.data.day_concentration_avg
+      sessions = response.data.Daily_Report_All
+      setConcentValue(score);
+      setDailySessions(sessions);
+    }).catch(error => console.log(error));
   }).catch(error => console.log(error));
-}).catch(error => console.log(error));
-
+}, [])
 
   return (
     <View style={styles.container_Stat}>
@@ -47,15 +48,13 @@ axios({
             {/* Using Data to make dynamic View */}
             
             {dailySessions.map((p, i) => {
-                return (<TouchableOpacity style={styles.cell_Session} key={p.session_id} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
+                return (<TouchableOpacity style={styles.cell_Session} key={p.session_id} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1, session_Id: p.session_id})}>
                 <Text style={styles.session_Text}>Session {i + 1}</Text>
                 <View style={{flexDirection:'row', marginTop: 10, justifyContent: "space-around"}}>
                     <Text style={styles.place}>{p.session_place}</Text>
                     <Text style={styles.time}>{p.session_start_time}</Text>
                     <View style={{flex:2}}></View>
-                    <TouchableOpacity style={{flex:0}} onPress={() => navigation.navigate("SessionStatistics", {id:i + 1})}>
                     <Entypo name="chevron-right" size={30} color="grey" />
-                    </TouchableOpacity>
                 </View>
             </TouchableOpacity>)
             })}

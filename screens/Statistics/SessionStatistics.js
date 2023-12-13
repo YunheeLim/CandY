@@ -12,6 +12,7 @@ export default function SessionStatistics({route}) {
   const [sessionData, setSessionData] = React.useState({});
   const [concentValue, setConcentValue] = React.useState(0); 
   const [userId, setUserId] = React.useState("");
+
   // trim the data that recieved from the server.
   const trimData = (data) => {
     let newData = {}
@@ -35,21 +36,24 @@ export default function SessionStatistics({route}) {
     return newData;
   }
   // Get UserID, Get Session Report
-  axios({
-    method: 'get',
-    url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
-  }).then((response) => {
-    ID = response.data.user_id
-    setUserId(ID);
+  React.useEffect(()=>{
     axios({
       method: 'get',
-      url: `http://192.168.2.212/CandY_Server/Session_Report/${userId}/${route.params.id}/`,
+      url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
     }).then((response) => {
-      sessionsDatas = response.data.Session_Data_Avg
-      setConcentValue(sessionsDatas.session_concentration_avg)
-      setSessionData(trimData(sessionsDatas))
+      ID = response.data.user_id
+      setUserId(ID);
+      axios({
+        method: 'get',
+        url: `http://192.168.2.212/CandY_Server/Session_Report/${response.data.user_id}/${route.params.session_Id}/`,
+      }).then((response) => {
+        sessionsDatas = response.data.Session_Data_Avg
+        setConcentValue(sessionsDatas.session_concentration_avg)
+        setSessionData(trimData(sessionsDatas))
+      }).catch(error => console.log(error));
     }).catch(error => console.log(error));
-  }).catch(error => console.log(error));
+  }, [])
+ 
   
   return (
     <View style={styles.container_Stat}>
