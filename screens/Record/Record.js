@@ -67,7 +67,7 @@ export default function RecordScreen({navigation}) {
             const start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setStartTime(start_time);
             console.log('start time: ', start_time);
-        } 
+        }
 
         setIsRunning(!isRunning);
     };
@@ -84,6 +84,7 @@ export default function RecordScreen({navigation}) {
             setValidTime(false);
         }
         if (place !== "" && startTime !== ""){
+
             // Make the date format in MySQL DATETIME foramt.
             const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setFinishTime(finish_time);
@@ -92,28 +93,27 @@ export default function RecordScreen({navigation}) {
             setValidPlace(true);
             setValidTime(true);
 
+
             const sending_data = {
                 "user_id": "HoT",
                 "session_place": place, 
                 "session_start_time": startTime, 
-                "session_end_time": finish_time
+                "session_end_time": finishTime,
             }
-            setTimeout(()=> {
-                axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
+
+            // Send data to the server.
+            axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
             .then((response)=>{
                 console.log(response.data);
+                // Reset all the values.
                 setSeconds(0);
                 setIsRunning(false);
                 setPlace("");
                 setStartTime("");
                 setFinishTime("");
-            });
-            }, 1000)
-            // Send data to the server.
-            
+            }).catch((e)=>console.log(e));
 
-            // Reset all the values.
-           
+
 
         }
     };
@@ -143,7 +143,7 @@ export default function RecordScreen({navigation}) {
                 >
                     <AntDesign name="arrowleft" size={30} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.header_text}>Record Working</Text>
+                <Text style={styles.header_text}>Record Task</Text>
             </View>
 
             <View style={styles.body}>
@@ -210,12 +210,12 @@ const styles = StyleSheet.create({
         marginVertical: 45,
     },
     arrow: {
-        marginRight: 60,
+        marginRight: 80,
     },
     header_text:{
         fontFamily: 'font-SemiBold',
         fontSize: 22,
-        marginRight: 95,
+        marginRight: 110,
     },
     body: {
         flex: 10,
