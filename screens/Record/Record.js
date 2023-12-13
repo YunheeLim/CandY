@@ -143,7 +143,7 @@ export default function RecordScreen({navigation}) {
                 >
                     <AntDesign name="arrowleft" size={30} color="black" />
                 </TouchableOpacity>
-                <Text style={styles.header_text}>Record Working</Text>
+                <Text style={styles.header_text}>Record Task</Text>
             </View>
 
             <View style={styles.body}>
@@ -210,12 +210,12 @@ const styles = StyleSheet.create({
         marginVertical: 45,
     },
     arrow: {
-        marginRight: 60,
+        marginRight: 80,
     },
     header_text:{
         fontFamily: 'font-SemiBold',
         fontSize: 22,
-        marginRight: 95,
+        marginRight: 110,
     },
     body: {
         flex: 10,
