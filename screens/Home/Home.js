@@ -27,7 +27,7 @@ export default function Home({navigation}) {
     url: "http://192.168.2.212/CandY_Server/Today_Avg/",
     })
     .then((response) => {
-        setScore(response.data.yesterday_concentration_avg);
+        setScore(response.data.today_concentration_avg);
     })
     .catch((error) => console.log(error));
 
