@@ -98,7 +98,7 @@ export default function RecordScreen({navigation}) {
                 "user_id": "HoT",
                 "session_place": place, 
                 "session_start_time": startTime, 
-                "session_end_time": finishTime,
+                "session_end_time": finish_time,
             }
 
             // Send data to the server.
