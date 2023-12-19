@@ -1,13 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import "react-native-gesture-handler";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Feather } from '@expo/vector-icons';
 
 
 export default function Bluetooth({navigation}) {
-    const [BluetoothMode, setBluetoothMode] = useState(false);
-    const [connectionComplete, setConnectionComplete] = useState(false);
+    const [BluetoothMode, setBluetoothMode] = useState(false); // Set Bluetooth mode
+    const [connectionComplete, setConnectionComplete] = useState(false); // Connection mode after completing the Bluetooth
+    
+    // Button Function that operate with changing the mode between Bluetooth and connectionComplete
     // bluetooth mode change, bluetooth: false -> bluetooth: true -> complete: true
     const changeMode = () => {
         setBluetoothMode(true);
@@ -24,6 +25,7 @@ export default function Bluetooth({navigation}) {
         <Text style={styles.connecting_SubText}>{BluetoothMode ? "Get help": ""}</Text>
         {BluetoothMode ? <Text></Text>:<TouchableOpacity 
         style={styles.connect_btn}
+        // if connection completed, Button would be Go To Home. 
         onPress={connectionComplete ? () => navigation.goBack(): () => changeMode()}
         >
             <Text style={styles.bluetooth_text}>{connectionComplete ? "Go Home":"Connect"}</Text>

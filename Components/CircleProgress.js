@@ -3,15 +3,14 @@ import {
   Easing,
   TextInput,
   Animated,
-  Text,
   View,
   StyleSheet,
 } from 'react-native';
-import Svg, { G, Circle, Rect } from 'react-native-svg';
+import Svg, { G, Circle } from 'react-native-svg';
 
-const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
+// Progress Circlce design
 export default function Donut({
   percentage = 75,
   radius = 40,

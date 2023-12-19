@@ -1,5 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Platform , Button, Alert, Dimensions} from 'react-native';
+import { StyleSheet, View, Dimensions} from 'react-native';
 import * as React from "react";
 import {Calendar} from 'react-native-calendars';
 import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
@@ -25,7 +24,6 @@ const MyCalendar = ({navigation, sessionList, userId}) => {
             <Calendar 
             // Day Tap Action
                 onDayPress={(day) => navigation.navigate("DailyStatistics", {id: day.dateString, navigation: navigation})}
-                // Just Dummy Data
                 markedDates={{ 
                     ...sessionDates
                 }} 
@@ -84,12 +82,12 @@ const MyCalendar = ({navigation, sessionList, userId}) => {
 }
 
 export default function Statistics({navigation}) {
-    const [userId, setUserId] = React.useState("");
-    const [monthlySessions, setMonthlySessions] = React.useState([]);
-    const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
-    const formattedDate = `${year}-${month}`;
+    const [userId, setUserId] = React.useState(""); // User's ID
+    const [monthlySessions, setMonthlySessions] = React.useState([]); // Session Lists
+    const currentDate = new Date(); // Now date
+    const year = currentDate.getFullYear(); // year
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // month
+    const formattedDate = `${year}-${month}`; // data formatting
     const [monthDate, setMonthDate] = React.useState(Date.now().toString());
 
     // Get UserID, Get User's all the sessions

@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Animated,Dimensions, ScrollView, Button } from 'react-native';
-import { Entypo } from '@expo/vector-icons';
+import { StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
 import axios from 'axios';
@@ -9,9 +8,10 @@ import axios from 'axios';
 const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 export default function SessionStatistics({route}) {
-  const [sessionData, setSessionData] = React.useState({});
-  const [concentValue, setConcentValue] = React.useState(0); 
-  const [userId, setUserId] = React.useState("");
+  const [sessionData, setSessionData] = React.useState({}); // Session Information
+  const [concentValue, setConcentValue] = React.useState(0);  // Concentration Value
+  const [userId, setUserId] = React.useState(""); // User's ID
+  
   // trim the data that recieved from the server.
   const trimData = (data) => {
     let newData = {}
@@ -34,6 +34,7 @@ export default function SessionStatistics({route}) {
     })
     return newData;
   }
+
   // Get UserID, Get Session Report
   React.useEffect(()=>{
     axios({
@@ -64,7 +65,7 @@ export default function SessionStatistics({route}) {
             </View>
         </View>
         <ScrollView style={{flex: 1,}}>
-            {/* Usign data to build dynamic View */}
+            {/* Using data to build dynamic View */}
             {Object.keys(sessionData).map((key) => {
                 return <View style={styles.cell_Session} key={key}>
                 <Text style={styles.session_Text}>{key}</Text>
