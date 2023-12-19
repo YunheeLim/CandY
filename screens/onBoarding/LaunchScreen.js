@@ -5,12 +5,13 @@ import { Image } from 'expo-image';
 import {LinearGradient} from 'expo-linear-gradient';
 import MaskedView from '@react-native-masked-view/masked-view';
 
+// The screen that the user sees first when the app is executed.
 export default function LaunchScreen({navigation}) {
 
   return (
     <View style={styles.container_LaunchScreen}>
       <View style={styles.container_LaunchScreen}>
-
+        {/* Make the gradient color of the title. */}
         <MaskedView
               maskElement={<Text style={styles.CandY_text}>CandY</Text>
             }>
@@ -25,18 +26,20 @@ export default function LaunchScreen({navigation}) {
         </MaskedView>
 
         <Text style={styles.sub_text}>Concentration and You!</Text>
+        {/* Get an image from the Internet */}
         <Image 
           source="https://i.pinimg.com/564x/21/92/e7/2192e7faff6fd0106191b68e3700cd79.jpg"
           style={{width: 200, height: 200, marginVertical: 40}}
         />
         <TouchableOpacity 
           style={styles.sign_in_btn}
+          // Navigate to the sign in screen page
           onPress={() => navigation.navigate('SignInScreen')}
         >
           <Text style={styles.sign_in_text}>Sign In</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.sign_up_btn}
+        <TouchableOpacity
+          // Navigate to the sign up screen page
           onPress={() => navigation.navigate('SignUpScreen')}
         >
           <Text style={styles.sign_up_text}>Don't you have an account?</Text>

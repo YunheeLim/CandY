@@ -1,34 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 
+// The screen when the user can sign up
 export default function SignUpScreen({navigation}) {
 
-  // Manage values as states.
-  const [id, setId] = useState("");
-  const [id_warning, setId_warning] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_warning, setPassword_warning] = useState("")
-  const [confirm_pw, setConfirm_pw]= useState("");
-  const [confirm_pw_warning, setConfirm_pw_warning] = useState("");
-  const [valid_id, setValid_id] = useState(false); // save whether ID is valid.
-  const [valid_password, setValid_password] = useState(false); // save whether password is valid.
-  const [valid_confirm_pw, setValid_confirm_pw] = useState(false); // save whether confirm_pw is valid.
-  const [validation_mode, setValidation_mode] = useState(false); // turns to true when the submit button is pressed.
+  // Manage values as states
+  const [id, setId] = useState(""); // Save user's ID
+  const [id_warning, setId_warning] = useState(""); // Save warning messages for ID when ID is not valid
+  const [password, setPassword] = useState(""); // Save user's password
+  const [password_warning, setPassword_warning] = useState("") // Save warning messages for the password when the password is not valid
+  const [confirm_pw, setConfirm_pw]= useState(""); // Save user's password confirmation
+  const [confirm_pw_warning, setConfirm_pw_warning] = useState(""); // Save warning messages for password confirmation when password confirmation is not valid
+  const [valid_id, setValid_id] = useState(false); // Save whether ID is valid
+  const [valid_password, setValid_password] = useState(false); // Save whether password is valid
+  const [valid_confirm_pw, setValid_confirm_pw] = useState(false); // Save whether confirm_pw is valid
+  const [validation_mode, setValidation_mode] = useState(false); // Turns to true when the submit button is pressed
   
   // Set values whenenver the value is typed.
   const onChangeId = (val) => setId(val);
   const onChangePassword = (val) => setPassword(val);
   const onChangeConfirm_pw = (val) => setConfirm_pw(val);
   
-  // Set each values null when the cancel button is clicked.
+  // Set each value null when the cancel button is pressed.
   const handleResetId = (val) => onChangeId("");
   const handleResetPassword = (val) => onChangePassword("");
   const handleResetConfirm_pw = (val) => onChangeConfirm_pw("");
-
   
   // Show warning messages in dynamic way whenever each fields changes.
   useEffect(() => {
@@ -44,14 +43,15 @@ export default function SignUpScreen({navigation}) {
   }, [confirm_pw]);
 
 
-  // Show warning message when ID is not valid.
+  // Show warning messages when ID is not valid.
   const handle_Id_Warning = () => {
 
-    setValidation_mode(false);
+    setValidation_mode(false); // The submit button is not pressed
 
+    // When ID is typed
     if(id !== ""){
       
-      if((id.length < 4) || id.length > 12) {
+      if((id.length < 4) || id.length > 12) { // When the length of ID is less than 4 or more than 12
         setId_warning("ID must be 4 to 12 characters long.");
         setValid_id(false);
       }else{
@@ -59,7 +59,7 @@ export default function SignUpScreen({navigation}) {
         setValid_id(true);
       }
 
-      if(!(/^[A-Za-z0-9][A-Za-z0-9]*$/.test(id))){
+      if(!(/^[A-Za-z0-9][A-Za-z0-9]*$/.test(id))){ // When ID doesn't contain letters and numbers.
         setId_warning("ID must be combination of letters and numbers.");
         setValid_id(false);
       }
@@ -73,17 +73,18 @@ export default function SignUpScreen({navigation}) {
   // Show warning message when password is not valid.
   const handle_Password_Warning = () => {
 
-    setValidation_mode(false);
+    setValidation_mode(false); // The submit button is not pressed
 
+    // When the password is typed
     if(password !== ""){
-      if(!(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password))){
+      if(!(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password))){ // When the length of the password is less than 8 or it doesn't contain a number
         setPassword_warning("Password must be at least 8 characters with 1 number.");
         setValid_password(false);
       }else{
         setPassword_warning("");
         setValid_password(true);
       }
-    }else if(password === "" && validation_mode === false){ // When password is cleared, the warning message is also cleared.
+    }else if(password === "" && validation_mode === false){ // When the password is cleared, the warning message is also cleared
       setPassword_warning("");
       setValid_password(false);
     }
@@ -92,32 +93,31 @@ export default function SignUpScreen({navigation}) {
   // Show warning message when confirmation password is not valid.
   const handle_Confirm_pw_Warning = () => {
 
-    setValidation_mode(false);
+    setValidation_mode(false); // The submit button is not pressed
 
-    if(confirm_pw !== password){
+    if(confirm_pw !== password){ // When the password doesn't match the password confirmation
       setConfirm_pw_warning("Your password and confirmation password must match.");
       setValid_confirm_pw(false);
-    }else{ // When confirmation password is cleared, the warning message is also cleared.
+    }else{ // When the password confirmation is cleared, the warning message is also cleared.
       setConfirm_pw_warning("");
       setValid_confirm_pw(true);
     }
   }
 
-  // Check whether all fields are valid when submit button is clicked.
+  // Check whether all fields are valid when the submit button is pressed.
   const validcheck = () => {
     setValidation_mode(true);
 
-    if(valid_id && valid_password && valid_confirm_pw){ // All fields are valid.
-      console.log('passed');
-      navigation.navigate('SignInScreen');
+    if(valid_id && valid_password && valid_confirm_pw){ // All fields are valid
+      navigation.navigate('SignInScreen'); // Navigate to the sign in screen
     }
-    if(id === "") { // ID field is empty.
+    if(id === "") { // ID field is empty
       setId_warning("Please enter your ID.");
     }
-    if(password === ""){ // Password field is empty.
+    if(password === ""){ // The password field is empty
       setPassword_warning("Please enter your password.");
     }
-    if(confirm_pw === ""){ // Confirmation password is empty.
+    if(confirm_pw === ""){ // The password confirmation field is empty
       setConfirm_pw_warning("Please enter your confirmation password.");
     }
   }
@@ -127,6 +127,7 @@ export default function SignUpScreen({navigation}) {
         <View style={styles.title}>
           <View style={styles.arrow}>
             <TouchableOpacity
+              // Navigate to the launch screen
               onPress={() => navigation.navigate('LaunchScreen')}
             >
               <AntDesign name="arrowleft" size={30} color="black" />
@@ -152,7 +153,7 @@ export default function SignUpScreen({navigation}) {
             <TouchableOpacity
               onPress={(id) => handleResetId(id)}
             >
-            {(id !== "") // If ID is typed, the cancel button show up.
+            {(id !== "") // If ID is typed, the cancel button shows up.
                 ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
                 : null
               }
@@ -174,7 +175,7 @@ export default function SignUpScreen({navigation}) {
             <TouchableOpacity
               onPress={(password) => handleResetPassword(password)}
             >
-              {(password !== "") // If password is typed, the cancel button show up.
+              {(password !== "") // If the password is typed, the cancel button shows up.
                   ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
                   : null
               }
@@ -196,7 +197,7 @@ export default function SignUpScreen({navigation}) {
             <TouchableOpacity
               onPress={(confirm_pw) => handleResetConfirm_pw(confirm_pw)}
             >
-              {(confirm_pw !== "") // If confirmation password is typed, the cancel button show up.
+              {(confirm_pw !== "") // If the password confirmation is typed, the cancel button shows up.
                   ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
                   : null
               }

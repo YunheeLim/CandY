@@ -1,108 +1,114 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
 import "react-native-gesture-handler";
 import { AntDesign } from '@expo/vector-icons';
 import * as React from "react";
-import * as Font from "expo-font";
 import axios from 'axios';
 
-
+// The screen that the user can record work-session
 export default function RecordScreen({navigation}) {
     
-    // Manage values as states.
+    // Manage values as states
+    const [id, setId] = useState("TeamHoT");
     const [place, setPlace] = useState(""); // The input data about where the user works
     const [seconds, setSeconds] = useState(0); // The time the user working
-    const [isRunning, setIsRunning] = useState(false); // Whether the stop watch is active or not.
-    const [startTime, setStartTime] = useState(""); // The time when the user starts working.
-    const [finishTime, setFinishTime] = useState(""); // The time when the user ends working.
-    const [validPlace, setValidPlace] = useState(false); // Whether the where data exists or not.
-    const [validTime, setValidTime] = useState(false); // Whether the time data existes or not.
-    const [submitMode, setSubmitMode] = useState(false); // Turns true when the submit button is pressed.
+    const [isRunning, setIsRunning] = useState(false); // Whether the stop watch is active or not
+    const [startTime, setStartTime] = useState(""); // The time when the user starts working
+    const [finishTime, setFinishTime] = useState(""); // The time when the user ends working
+    const [validPlace, setValidPlace] = useState(false); // Whether the where data exists or not
+    const [validTime, setValidTime] = useState(false); // Whether the time data existes or not
+    const [submitMode, setSubmitMode] = useState(false); // Turns true when the submit button is pressed
 
     // Set values as the value is typed.
     const onChangePlace = (val) =>{
         setPlace(val);
     }
 
-    // Count up the stop watch every second.
+    // Get user's id from the server
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+          }).then((response) => {
+            setId(response.data.user_id);
+          })
+    }, []);
+
+    // Handle the stop watch
     useEffect(() => {
 
         let interval;
 
-        if (isRunning) {
+        if (isRunning) { // When the stop watch is running
             interval = setInterval(() => {
-                setSeconds(seconds+ 1);
+                setSeconds(seconds+ 1); // Count up every second
             }, 1000);
-        }else if (!isRunning && (seconds !== 0)){
-            clearInterval(interval);
+        }else if (!isRunning && (seconds !== 0)){ // When the stop watch is reset
+            clearInterval(interval); // Reset the time
         }
-        return ()=>clearInterval(interval);
+        return () => clearInterval(interval);
 
     }, [isRunning, seconds]);
 
-    // Manage the place value and submit state at the same time.
+    // Manage the place value and submit state at the same time
     useEffect(() => {
-        if (place !== ""){
+        if (place !== ""){ // When the place is typed
             setValidPlace(true);
-        }else if (place === "" && !submitMode){
+        }else if (place === "" && !submitMode){ // When the place is not typed and not in the submit mode
             setValidPlace(true);
         }
     }, [place]);
 
+    // Manage the start time value and submit state at the same time
     useEffect(() => {
-        if(startTime !== ""){
+        if(startTime !== ""){ // When the start time is pressed
             setValidTime(true);
-        }else if(startTime === "" && !submitMode){
+        }else if(startTime === "" && !submitMode){ // When the start time is not pressed and not in the submit mode
             setValidTime(true);
         }
     }, [startTime]);
 
-    // Is called when the start/stop button is pressed.
+    // Is called when the start/stop button is pressed
     const handleStartStop = () => {
 
         // When the session starts.
         if (seconds == 0){
-            // Make the date format in MySQL DATETIME foramt.
+            // Make the date format in MySQL DATETIME foramt
             const start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setStartTime(start_time);
             console.log('start time: ', start_time);
         }
-
         setIsRunning(!isRunning);
     };
 
-    // TODO: Sending the data to the server.
-    // Is called when the submit button is pressed.
+    // Is called when the submit button is pressed
     const handleSubmit = async () => {
         setSubmitMode(true);
 
-        if (place === ""){
+        if (place === ""){ // When the place is not typed
             setValidPlace(false);
         }
-        if (startTime === ""){
+        if (startTime === ""){ // When the start time button is not pressed
             setValidTime(false);
         }
-        if (place !== "" && startTime !== ""){
-
-            // Make the date format in MySQL DATETIME foramt.
+        if (place !== "" && startTime !== ""){ // When all data is valid
+            
+            // Make the date format in MySQL DATETIME foramt
             const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setFinishTime(finish_time);
+
             console.log('finish time: ', finish_time);
 
             setValidPlace(true);
             setValidTime(true);
 
-
-            const sending_data = {
-                "user_id": "HoT",
+            // Send data to the server.
+            axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', {
+                "user_id": id,
                 "session_place": place, 
                 "session_start_time": startTime, 
                 "session_end_time": finish_time,
-            }
-
-            // Send data to the server.
-            axios.post('http://192.168.2.212/CandY_Server/Create_Session_Result/', sending_data)
+            })
             .then((response)=>{
                 console.log(response.data);
                 // Reset all the values.
@@ -112,15 +118,12 @@ export default function RecordScreen({navigation}) {
                 setStartTime("");
                 setFinishTime("");
             }).catch((e)=>console.log(e));
-
-
-
         }
     };
 
-    // Make the time in HH:MM:SS format.
+    // Make the time in HH:MM:SS format
     const formatTime = ( time ) => {
-        // Parse milliseconds time to hours, minutes, seconds.
+        // Parse milliseconds time to hours, minutes, seconds
         const hours = Math.floor(time / 3600);
         const minutes = Math.floor((time % 3600) / 60);
         const second = time % 60;
@@ -138,6 +141,7 @@ export default function RecordScreen({navigation}) {
 
             <View style={styles.header}>
                 <TouchableOpacity
+                    // Navigate to the home screen
                     onPress={() => navigation.navigate('HomeScreen')}
                     style={styles.arrow}
                 >
@@ -155,6 +159,7 @@ export default function RecordScreen({navigation}) {
                             value={place}
                             style={{
                                 ...styles.input_box, 
+                                // If the place is not valid, change the field color into red
                                 borderColor: (validPlace ? styles.input_box.borderColor : 'red'),
                                 borderWidth: (validPlace ? styles.input_box.borderWidth : 1),
                                 }}
@@ -176,12 +181,14 @@ export default function RecordScreen({navigation}) {
                         onPress={handleStartStop}
                         style={{
                             ...styles.button,
+                            // If the place is not valid, change the button color into red
                             backgroundColor: (validTime ? styles.button.backgroundColor : 'red'),
                         }}
                     >
-                        <Text 
-                            style={styles.btn_text}
-                        >{isRunning ? "Stop" : "Start" }</Text>
+                        <Text style={styles.btn_text}>
+                            {/* Change the text as the state of the stop watch */}
+                            {isRunning ? "Stop" : "Start" }
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         onPress={handleSubmit}
