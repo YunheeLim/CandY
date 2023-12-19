@@ -12,7 +12,6 @@ export default function SessionStatistics({route}) {
   const [sessionData, setSessionData] = React.useState({});
   const [concentValue, setConcentValue] = React.useState(0); 
   const [userId, setUserId] = React.useState("");
-
   // trim the data that recieved from the server.
   const trimData = (data) => {
     let newData = {}

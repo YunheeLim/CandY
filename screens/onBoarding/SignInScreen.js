@@ -1,31 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useState, useEffect } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 
+// The screen when the user can sign in
 export default function SignInScreen({navigation}) {
 
   // Manage values as states.
-  const [id, setId] = useState("");
-  const [id_warning, setId_warning] = useState("");
-  const [password, setPassword] = useState("");
-  const [password_warning, setPassword_warning] = useState("")
-  const [valid_id, setValid_id] = useState(false); // save whether ID is valid.
-  const [valid_password, setValid_password] = useState(false); // save whether password is valid.
-  const [validation_mode, setValidation_mode] = useState(false); // turns to true when the submit button is pressed.
+  const [id, setId] = useState(""); // Save user's ID
+  const [id_warning, setId_warning] = useState(""); // Save warning messages for ID when ID is not valid
+  const [password, setPassword] = useState(""); // Save user's password
+  const [password_warning, setPassword_warning] = useState("") // Save warning messages for the password when the password is not valid
+  const [valid_id, setValid_id] = useState(false); // Save whether ID is valid
+  const [valid_password, setValid_password] = useState(false); // Save whether password is valid
+  const [validation_mode, setValidation_mode] = useState(false); // Turns to true when the submit button is pressed
 
-  // Set values whenenver the value is typed.
+  // Set values whenenver the value is typed
   const onChangeId = (val) => setId(val);
   const onChangePassword = (val) => setPassword(val);
 
-  // Set each values null when the cancel button is clicked.
+  // Set each values null when the cancel button is pressed
   const handleResetId = (val) => onChangeId("");
   const handleResetPassword = (val) => onChangePassword("");
 
   
-  // Show warning messages in dynamic way whenever each fields changes.
+  // Show warning messages in dynamic way whenever each fields changes
   useEffect(() => {
     handle_Id_Warning();
   }, [id]);
@@ -34,32 +34,30 @@ export default function SignInScreen({navigation}) {
     handle_Password_Warning();
   }, [password]);
 
-  // Show warning message when ID is not valid.
+  // Show warning message when ID is not valid
   const handle_Id_Warning = () => {
     if(id !== ""){
       setId_warning("");
     }
-    //TODO: Show warning message when ID doesn't match ID from DB.
   };
 
-  // Show warning message when password is not valid.
+  // Show warning message when password is not valid
   const handle_Password_Warning = () => {
     if(password !== ""){
       setPassword_warning("");
     }
-    //TODO: Show warning message when password doesn't match password from DB.
-
   };
 
-  // Check whether all fields are valid when submit button is clicked.
+  // Check whether all fields are valid when submit button is pressed
   const validcheck = (id, password) => {
     if(id !== "" && password !== ""){
+      // Navigate to the main page
       navigation.navigate('Main');
     }
-    if(id === "") { 
+    if(id === "") { // ID field is empty
       setId_warning("Please enter your ID.");
     }
-    if(password === ""){
+    if(password === ""){// The password field is empty
       setPassword_warning("Please enter your password.");
     }
   }
@@ -93,7 +91,7 @@ export default function SignInScreen({navigation}) {
             </View>
             <TouchableOpacity
               onPress={(id) => handleResetId(id)}
-            >{(id !== "") // If ID is typed, the cancel button show up.
+            >{(id !== "") // If ID is typed, the cancel button shows up
                 ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
                 : null
               }
@@ -114,7 +112,7 @@ export default function SignInScreen({navigation}) {
             </View>
             <TouchableOpacity
               onPress={(password) => handleResetPassword(password)}
-            >{(password !== "") // If password is typed, the cancel button show up.
+            >{(password !== "") // If password is typed, the cancel button shows up
                 ? (<MaterialIcons name="cancel" size={20} color="#a4a4a4" />) 
                 : null
               }

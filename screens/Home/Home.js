@@ -1,48 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import "react-native-gesture-handler";
 import { useState, useEffect } from "react";
-import * as Font from "expo-font";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import CircularProgress from '../../Components/CircularProgress';
 import axios from 'axios';
 
-let ID = "teamhot";
-const SCORE = 70;
-
+// The screen that shows the average concentration for today
 export default function Home({navigation}) {
-    const [id, setId] = useState("");
-    const [score, setScore] = useState(0);
-    // Get data from the server.
 
-    axios({
-        method: 'get',
-        url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
-      }).then((response) => {
-        ID = response.data.user_id;
-        setId(ID);
-      }).catch(error => console.log(error));
-    axios({
-    method: "get",
-    url: "http://192.168.2.212/CandY_Server/Today_Avg/",
-    })
-    .then((response) => {
-        setScore(response.data.today_concentration_avg);
-    })
-    .catch((error) => console.log(error));
+    const [id, setId] = useState("teamhot"); // user's ID
+    const [score, setScore] = useState(0); // user's concentration score for today
+
+    // Get user's ID and concentration score from the server
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
+          }).then((response) => {
+            setId(response.data.user_id);
+          }).catch(error => console.log(error));
+        axios({
+        method: "get",
+        url: "http://192.168.2.212/CandY_Server/Today_Avg/",
+        })
+        .then((response) => {
+            setScore(response.data.today_concentration_avg);
+        })
+        .catch((error) => console.log(error));
+    }, []);
 
     const date = new Date();
 
-    // Get current hour for welcome text.
+    // Get current hour for welcome text
     const current_hour = date.getHours();
 
-    // Get yesterday date.
-    date.setDate(date.getDate() - 1)
-    const yesterday = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-
-    // TODO: Sending the date date to DB.
+    // Format the date
+    const today = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
     
-    // Change the welcome message depending on the time.
+    // Change the welcome message depending on the time
     let welcome_text = "Hello,"
 
     if (6 <= current_hour && current_hour < 12){
@@ -65,6 +60,7 @@ export default function Home({navigation}) {
             </View>
             <View style={styles.watch_icon}>
                 <TouchableOpacity
+                // Navigate to the bluetooth screen
                 onPress={() => navigation.navigate('Bluetooth')}
                 >
                     <View style={styles.icon_circle}>
@@ -78,7 +74,8 @@ export default function Home({navigation}) {
         <View style={styles.body}>
             <TouchableOpacity 
                 style={styles.cell}
-                onPress={() => navigation.navigate('DailyStatistics', {id: yesterday, navigation: navigation})}
+                // Navigate to the daily statistics screen
+                onPress={() => navigation.navigate('DailyStatistics', {id: today, navigation: navigation})}
             >
                 <Text style={styles.concentration_score_text}>Concentration Score</Text>  
                 <Text style={styles.for_yesterday_text}>for today</Text>            
@@ -86,6 +83,7 @@ export default function Home({navigation}) {
             </TouchableOpacity>
             <View style={styles.container_record}>
                 <TouchableOpacity 
+                    // Navigate to the record screen
                     onPress={() => navigation.navigate('RecordScreen')}
                     style={styles.record_btn}
                 >

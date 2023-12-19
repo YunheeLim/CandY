@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import "react-native-gesture-handler";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
@@ -7,7 +6,7 @@ import Profile from "../profile/profile"
 import Recommendation from '../Recommendation/Recommendation';
 import Statistics from '../Statistics/Statistics';
 import DailyStatistics from '../Statistics/DailyStatistics';
-import LaunchScreen from '../onBoarding/LaunchScreen';
+import SessionStatistics from '../Statistics/SessionStatistics';
 import Home from '../Home/Home';
 import Bluetooth from '../Home/Bluetooth';
 import RecordScreen from '../Record/Record';
@@ -16,12 +15,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
 import * as React from "react";
-import * as Font from "expo-font";
-import SessionStatistics from '../Statistics/SessionStatistics';
-
 
 function HomeScreen() {
-
+    // A stack nativator object for changing pages
     const HomeStack = createStackNavigator();
 
     return (
@@ -29,11 +25,13 @@ function HomeScreen() {
         <HomeStack.Screen name="HomeScreen" component={Home} options={{ headerShown: false }}/>
         <HomeStack.Screen name="RecordScreen" component={RecordScreen} options={{ headerShown: false }}/>
         <HomeStack.Screen name="DailyStatistics" component={DailyStatistics} options={({route}) => ({
+          // Get the information from previous screen
           title: `${route.params.id}`,
           headerBackTitleVisible: false,
           headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
         })} />
         <HomeStack.Screen name="SessionStatistics" component={SessionStatistics} options={({route}) => ({
+          // Get the information from previous screen
           title: `Session ${route.params.id}`,
           headerBackTitleVisible: false,
           headerBackImage: () => (<AntDesign name="arrowleft" size={25} color="black" style={{marginLeft: 10}}/>),
@@ -82,7 +80,11 @@ function HomeScreen() {
       </StatStack.Navigator>
     )
   }
+
+// The main screen that contains tab screens
 export default function Main() {
+
+    // A tab navigator object for moving tab
     const Tab = createBottomTabNavigator();
     
     return (
@@ -134,6 +136,3 @@ export default function Main() {
       </Tab.Navigator>
     );
 }
-
-const styles = StyleSheet.create({
-});
