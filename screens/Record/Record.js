@@ -76,7 +76,6 @@ export default function RecordScreen({navigation}) {
             // Make the date format in MySQL DATETIME foramt
             const start_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setStartTime(start_time);
-            console.log('start time: ', start_time);
         }
         setIsRunning(!isRunning);
     };
@@ -97,8 +96,6 @@ export default function RecordScreen({navigation}) {
             const finish_time = new Date().toISOString().slice(0, 19).replace('T', ' ');
             setFinishTime(finish_time);
 
-            console.log('finish time: ', finish_time);
-
             setValidPlace(true);
             setValidTime(true);
 
@@ -110,7 +107,6 @@ export default function RecordScreen({navigation}) {
                 "session_end_time": finish_time,
             })
             .then((response)=>{
-                console.log(response.data);
                 // Reset all the values.
                 setSeconds(0);
                 setIsRunning(false);
