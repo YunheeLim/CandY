@@ -1,28 +1,22 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert } from 'react-native';
-import { useState } from 'react';
-import { Image } from 'expo-image';
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import axios from 'axios';
+import { useState } from 'react';
 
 let ID = "teamhot"
 
 export default function Profile({navigation}) {
-
-    const [id, setId] = useState("");
-
-    // Get data from the server.
+  const [ID, setID] = useState("teamhot") // user's ID
+  
     axios({
+      // Get data from the server.
       method: 'get',
       url: 'http://192.168.2.212/CandY_Server/Show_UserID/',
     }).then((response) => {
       ID = response.data.user_id;
       setId(ID);
     }).catch(error => console.log(error));
-
-    const buildSeparator = () => {
-        return <View style={styles.separator} />;
-    };
 
   return (
     <View style={styles.container_Profile}>

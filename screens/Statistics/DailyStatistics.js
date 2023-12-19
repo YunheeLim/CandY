@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity, Animated,Dimensions, ScrollView, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity,Dimensions, ScrollView } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import * as React from 'react';
 import CircularProgress from '../../Components/CircularProgress';
@@ -10,9 +10,8 @@ const {width: SCREEN_WIDTH, height: SCREEN_HEIGHT} = Dimensions.get("window");
 
 
 export default function DailyStatistics({navigation, route}) {
-  const [concentValue, setConcentValue] = React.useState(0); 
-  const [userId, setUserId] = React.useState("");
-  const [dailySessions, setDailySessions] = React.useState([]);
+  const [concentValue, setConcentValue] = React.useState(0);  // Concentration Value
+  const [dailySessions, setDailySessions] = React.useState([]); // DailySession Lists
 
 // Get UserID, Get User's sessions
 React.useEffect(()=>{

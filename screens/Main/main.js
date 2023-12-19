@@ -1,4 +1,3 @@
-import { StyleSheet, Text, View } from 'react-native';
 import "react-native-gesture-handler";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -13,7 +12,6 @@ import RecordScreen from '../Record/Record';
 import { Entypo } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-
 import * as React from "react";
 
 function HomeScreen() {
@@ -46,12 +44,14 @@ function HomeScreen() {
   }
   
   function RecommendScreen() {
+    // RecommendScreen Builder
     return (
       <Recommendation/>
     )
   }
   
   function ProfileScreen() {
+    // ProfileScreen Builder
     const ProfileStack = createStackNavigator();
     return (
       <ProfileStack.Navigator>
@@ -59,8 +59,9 @@ function HomeScreen() {
       </ProfileStack.Navigator>
     )
   }
-  // Build Statistics Navigator Stack and Register the screens
+
   function StatNavigator() {
+  // Build Statistics Navigator Stack and Register the screens
     const StatStack = createStackNavigator();
     return (
       <StatStack.Navigator>
@@ -81,11 +82,12 @@ function HomeScreen() {
     )
   }
 
-// The main screen that contains tab screens
-export default function Main() {
 
-    // A tab navigator object for moving tab
+export default function Main() {
+  // The main screen that contains tab screens
+    
     const Tab = createBottomTabNavigator();
+    // A tab navigator object for moving tab
     
     return (
       <Tab.Navigator
