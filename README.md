@@ -70,9 +70,9 @@ git clone
 npm start
 ```
 4. Scan the QR code that can be shown on the console with your phone.
-<img width="300" alt="architecture" src="(https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/9978ac60-6f0c-407e-bcf4-a81e08a5153d">
-<img width="300" alt="architecture" src="(https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/debbbae8-c5ab-40c5-8358-0d2b9dfae748">   
-<img width="300" alt="architecture" src="(https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/51bb2af1-a106-413e-bf72-fa83b314d559">   
+![app_screen1](https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/9978ac60-6f0c-407e-bcf4-a81e08a5153d =x250)
+![app_screen2](https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/debbbae8-c5ab-40c5-8358-0d2b9dfae748)
+![app_screen3](https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/51bb2af1-a106-413e-bf72-fa83b314d559)  
 
 #### Requirements
 ```
