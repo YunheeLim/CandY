@@ -39,7 +39,7 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
 
 #### Service Architecture
 <p align="center">
-<img width="1000" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/940893d5-319f-4e06-b7a2-1deb2c91f46e">   
+<img width="100" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/940893d5-319f-4e06-b7a2-1deb2c91f46e">   
 </p>
 
 ## Research Problem Statements 

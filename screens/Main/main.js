@@ -1,7 +1,7 @@
 import "react-native-gesture-handler";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import Profile from "../profile/profile"
+import Profile from "../Profile/Profile";
 import Recommendation from '../Recommendation/Recommendation';
 import Statistics from '../Statistics/Statistics';
 import DailyStatistics from '../Statistics/DailyStatistics';
