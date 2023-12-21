@@ -62,6 +62,16 @@ Modern day society has bore witness to a phenomenon of diminished concentration 
    
 ## Environment Setting
 >### Machine Learning
+1. Go to https://www.python.org/downloads/ and install Python version 3.11
+2. Install packages
+```bash
+pip install numpy pandas matplotlib shap lime xgboost 
+```
+3. Set the environment variables for each OS
+4. git clone
+5. Open Jupyter Lab or Colab
+7. Set the dataset path like File Structure
+8. Run the code
 
 >### Service
 1. Go to https://nodejs.org/en and download Node.js
@@ -89,18 +99,32 @@ npm start
 ```
 - npm version 8.1.0
 - expo-cli version 6.3.10
+- Python version 3.11.5
 ```
 
 ## File Structure
     📦2023-ksw-fall-program-final-team-hot/
+     └📂data
+      └📜1_Real_Original.csv
+      └📜2_Augmentation.csv
+      └📜3_Removing_errors.csv
+      └📜4_Feature_Engineering.csv
+      └📜4+5_Feature_Scaling.csv
+      └📜4+5_Feature_Scaling+6_Imputation.csv
+      └📜4+6_Imputation.csv
+      └📜4+6_Imputation+5_Feature_Scaling(final_dataset).csv
      └📂presentation
-      └📜Mid-Presentation-Team-HoT.pptx
-      └📜Final-Presentation-Team-Hot.pptx
+      └📜mid_presentation.pptx
+      └📜final_presentation.pptx
       └📜demo.mp4
      └📂paper
       └📜paper.pdf
      └📂code
        └📂data_analysis
+       └📂Machine_Learning
+        └📜Dataset_selection_Model_selection.ipynb
+        └📜Model_Optimization.ipynb
+        └📜Model_Training_Result_Analysis.ipynb
        └📂frontend
          └📂assets
          └📂components
