@@ -23,7 +23,7 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
     - [Result](#result)     
     - [Model Architecture](#mode-architecture) -->
 
-## Collaborator
+## Team Members
 
 | Name         | University               | Department                                   | Email               | Contact                        |
 | :------------- | :------------------------: | :--------------------------------------------: | :-------------------: | :------------------------------: |
