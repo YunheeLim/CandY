@@ -140,11 +140,9 @@ npm start
      └📜README.md
        
 
-## Experiment
+## Experiment Result
     
->#### Result
-
-#### k=5
+>#### k=5
 
 |   |R2|RMSE|MAE|
 |---|:-:|:-:|:-:
@@ -155,7 +153,8 @@ npm start
 |**XGBoost Regressor**|0.7979|0.1084|0.0780|
 |**Optimized XGBR**|0.8270|0.1003|0.0701|
 
-#### k=10
+>#### k=5
+>
 |   |R2|RMSE|MAE|
 |---|:-:|:-:|:-:
 |**Extra Tree Regressor**|0.8745|0.0854|0.0579|
