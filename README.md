@@ -27,12 +27,12 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
 
 | Name         | University               | Department                                   | Email               | Contact                        |
 | :------------- | :------------------------: | :--------------------------------------------: | :-------------------: | :------------------------------: |
-| Seojeong Park    | Hallym University        | Dept. of Computer Science                    | diditjwjd@gmail.com | https://github.com/seojeongP     |
-| Seungah Jang  | Jeju National University        | Dept. of Computer Science                    | wkdtmddk6733@gmail.com   | https://github.com/ssaaJang     |
-| Jeongmin Seo | Kyunhee University     | Dept. of Computer Information                | balljm@naver.com | https://github.com/jeongmin1217       |
-| Yunhui Lim | Kyunhee University     | Dept. of Computer Science and Engineering                | lyhhh0320@gmail.com   | https://github.com/YunheeLim    |
-| Byeongsoo Min  | Kyunhee University | Dept. of Computer Science and Engineering       | qud9783@gmail.com   | https://github.com/Byeongsoo-Min  |
-| Martin Kim | Purdue University        | Dept. of Polytechnic Institute | 19alswprla@gmail.com    | https://github.com/19alswprla |
+| Seojeong Park    | Hallym University        | Computer Science                    | diditjwjd@gmail.com | https://github.com/seojeongP     |
+| Seungah Jang  | Jeju National University        | Computer Science                    | wkdtmddk6733@gmail.com   | https://github.com/ssaaJang     |
+| Jeongmin Seo | Kyunhee University     | Computer Information                | balljm@naver.com | https://github.com/jeongmin1217       |
+| Yunhui Lim | Kyunhee University     | Computer Science and Engineering                | lyhhh0320@gmail.com   | https://github.com/YunheeLim    |
+| Byeongsoo Min  | Kyunhee University | Computer Science and Engineering       | qud9783@gmail.com   | https://github.com/Byeongsoo-Min  |
+| Martin Kim | Purdue University        | Computer Science | 19alswprla@gmail.com    | https://github.com/19alswprla |
 
 
 ## Project Overview
