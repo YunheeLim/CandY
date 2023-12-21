@@ -34,6 +34,16 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
 | Byeongsoo Min  | Kyunhee University | Computer Science and Engineering       | qud9783@gmail.com   | https://github.com/Byeongsoo-Min  |
 | Martin Kim | Purdue University        | Computer Science | 19alswprla@gmail.com    | https://github.com/19alswprla |
 
+## Research Problem Statements 
+
+Modern day society has bore witness to a phenomenon of diminished concentration levels and attention spans as a result of dependency and increased usage of smart phones. The usage rate of smartphones is more than 70% of adults in the United States and nearly 50% of adults worldwide. The decline in cognitive ability in daily life due to the increase in smartphone use can be observed. Therefore, the need for methods to facilitate and assist users in maintaining high levels of concentration in their daily lives has increased significantly.
+
+## Research Novelty 
+1. This study adopted a wearable device in daily life to measure the concentration level instead of using a specialized EEG sensor.<br>
+2. This study set the experimental background as a everyday life.<br>
+3. Extracted brainwaves were used as a direct indicator of concentration without Fourier transform.<br>
+4. A quantified figure was utilized to analyze a concentration score instead of subjective self-assessment.<br>
+5. The correlation between bio-data and concentration is provided with importance and proportionality.
 
 ## Project Overview
 <p align="center">
@@ -49,17 +59,6 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
 <p align="center">
 <img width="500" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/940893d5-319f-4e06-b7a2-1deb2c91f46e">   
 </p>
-
-## Research Problem Statements 
-
-Modern day society has bore witness to a phenomenon of diminished concentration levels and attention spans as a result of dependency and increased usage of smart phones. The usage rate of smartphones is more than 70% of adults in the United States and nearly 50% of adults worldwide. The decline in cognitive ability in daily life due to the increase in smartphone use can be observed. Therefore, the need for methods to facilitate and assist users in maintaining high levels of concentration in their daily lives has increased significantly.
-
-## Research Novelty 
-1. This study adopted a wearable device in daily life to measure the concentration level instead of using a specialized EEG sensor.<br>
-2. This study set the experimental background as a everyday life.<br>
-3. Extracted brainwaves were used as a direct indicator of concentration without Fourier transform.<br>
-4. A quantified figure was utilized to analyze a concentration score instead of subjective self-assessment.<br>
-5. The correlation between bio-data and concentration is provided with importance and proportionality.
    
 ## Environment Setting
 >### Machine Learning
