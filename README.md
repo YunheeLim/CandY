@@ -39,7 +39,7 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
 
 #### Service Architecture
 <p align="center">
-<img width="1000" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/940893d5-319f-4e06-b7a2-1deb2c91f46e">   
+<img width="500" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/940893d5-319f-4e06-b7a2-1deb2c91f46e">   
 </p>
 
 ## Research Problem Statements 
@@ -70,9 +70,9 @@ git clone
 npm start
 ```
 4. Scan the QR code that can be shown on the console with your phone.
-![app_screen1](https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/9978ac60-6f0c-407e-bcf4-a81e08a5153d)
-![app_screen2](https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/debbbae8-c5ab-40c5-8358-0d2b9dfae748)
-![app_screen3](https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/51bb2af1-a106-413e-bf72-fa83b314d559)
+<img width="300" alt="architecture" src="(https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/9978ac60-6f0c-407e-bcf4-a81e08a5153d">
+<img width="300" alt="architecture" src="(https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/debbbae8-c5ab-40c5-8358-0d2b9dfae748">   
+<img width="300" alt="architecture" src="(https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/51bb2af1-a106-413e-bf72-fa83b314d559">   
 
 #### Requirements
 ```
