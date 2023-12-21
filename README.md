@@ -36,8 +36,16 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
 
 
 ## Project Overview
+<p align="center">
+<img width="1000" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/9032607c-dc88-4661-8c5c-600f3c55e6b4">   
+</p>
 
-#### Service Architecture
+>### Machine Learning Process
+<p align="center">
+<img width="700" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/dd04f249-a38f-4e9f-88ce-a8f5615ad139">   
+</p>
+
+>### Service Architecture
 <p align="center">
 <img width="500" alt="architecture" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/940893d5-319f-4e06-b7a2-1deb2c91f46e">   
 </p>
@@ -69,10 +77,14 @@ git clone
 ```bash
 npm start
 ```
-4. Scan the QR code that can be shown on the console with your phone.
-<img width="200" alt="app_screen1" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/9978ac60-6f0c-407e-bcf4-a81e08a5153d">
-<img width="200" alt="app_screen2" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/debbbae8-c5ab-40c5-8358-0d2b9dfae748">   
-<img width="200" alt="app_screen3" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/51bb2af1-a106-413e-bf72-fa83b314d559">   
+4. Scan the QR code that can be shown in the console with your phone.
+<p align="center">
+<img width="200" alt="app_screen1" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/7922116d-d626-4ee6-8557-abb10b9c63b6"> 
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<img width="200" alt="app_screen2" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/435d4f48-ec10-4fb7-82b8-cb929072e45b">
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<img width="200" alt="app_screen3" src="https://github.com/Healthcare-of-Things/CandY-front/assets/92131041/dfa05cae-f907-47e8-950d-d0d672b6820d">    
+</p>
 
 #### Requirements
 ```
@@ -129,39 +141,26 @@ npm start
        
 
 ## Experiment
-
->##### Best Result
-|   |Audio|Image|
-|---|:-:|:-:
-|**Sampling Rate**|16,000 Hz|16,000 Hz|
-|**Model**|CNN Layer 3|CNN Layer 3|
-|**Feature Extraction**|MFCC|Mel Spectrogram|
-|**Accuracy**|0.96|0.93|
-|**F1-Score**|0.96|0.93|
-|**AUC**|0.9882|0.9753|
-
->##### Model Architecture
-
-<p align="center">
-<img width="1163" alt="Project Overall Architecture" src="https://user-images.githubusercontent.com/101625865/208327334-3429c632-3135-48fb-8b3a-5cf896225ce3.png">
-</p>
-
-  Three microphones are connected into raspberry pi. Each microphone records 3 second repeatedly and we put that data into model right away which put in Raspberry pi. Model will predict whether it is coyote or not. If it was coyote, network team transmit the time stamp to the gateway by Lorawan and three different time values of the coyote sound will determine the location of the coyote. And then they visualize the location on the map.
-
-
->##### Hyper Parameter for Best Model 
-
-    ✔ Audio
-    - Optimization function : Adam optimizer
-    - Learning rate : 0.001
-    - Batch size : 10
-    - Epoch : 30 
-    - Sampling rate : 16,000 Hz (MFCC)
     
-    ✔ Image
-    - Optimization function : Adam optimizer
-    - Learning rate : 0.001
-    - Batch size : 32
-    - Epoch : 30 
-    - Sampling rate : 16,000 Hz (Mel Spectrogram)
+>#### Result
 
+#### k=5
+
+|   |R2|RMSE|MAE|
+|---|:-:|:-:|:-:
+|**Extra Tree Regressor**|0.8600|0.0902|0.0609|
+|**Optimized ETR**|0.8610|0.0899|0.0608|
+|**RandomForest Regressor**|0.8286|0.0998|0.0680|
+|**Optimized RFR**|0.8316|0.0989|0.0674|
+|**XGBoost Regressor**|0.7979|0.1084|0.0780|
+|**Optimized XGBR**|0.8270|0.1003|0.0701|
+
+#### k=10
+|   |R2|RMSE|MAE|
+|---|:-:|:-:|:-:
+|**Extra Tree Regressor**|0.8745|0.0854|0.0579|
+|**Optimized ETR**|<span style="color:red">0.8763</span>|0.0848|0.0576|
+|**RandomForest Regressor**|0.8430|0.0955|0.0652|
+|**Optimized RFR**|0.8444|0.0951|0.0649|
+|**XGBoost Regressor**|0.7993|0.1084|0.0774|
+|**Optimized XGBR**|0.8314|0.0990|0.0689|
