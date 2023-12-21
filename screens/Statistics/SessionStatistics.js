@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Dimensions, ScrollView} from 'react-native';
 import * as React from 'react';
-import CircularProgress from '../../Components/CircularProgress';
+import CircularProgress from '../../components/CircularProgress';
 import axios from 'axios';
 
 

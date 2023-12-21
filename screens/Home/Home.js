@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import "react-native-gesture-handler";
 import { useState, useEffect } from "react";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import CircularProgress from '../../Components/CircularProgress';
+import CircularProgress from '../../components/CircularProgress';
 import axios from 'axios';
 
 // The screen that shows the average concentration for today
