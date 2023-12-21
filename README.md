@@ -142,7 +142,7 @@ npm start
 
 ## Experiment Result
     
->#### k=5
+>#### 5-Fold Cross-Validation
 
 |   |R2|RMSE|MAE|
 |---|:-:|:-:|:-:
@@ -153,7 +153,7 @@ npm start
 |**XGBoost Regressor**|0.7979|0.1084|0.0780|
 |**Optimized XGBR**|0.8270|0.1003|0.0701|
 
->#### k=5
+>#### 10-Fold Cross-Validation
 >
 |   |R2|RMSE|MAE|
 |---|:-:|:-:|:-:
