@@ -1,16 +1,16 @@
-### 2023_KSW_Fall_Program
+# 2023_KSW_Fall_Program
 
 ### Team HoT
 
 ## Project Title
 
-Establishing the Correlation Between Bio-Data and Concentration Level Utilizing EEG Data
+Establishing the Correlation Between Bio-Data and Concentration Levels Utilizing EEG Data
 
 ## Project Period
- Sep/20/2023 ~ Dec/20/2022 
+ Sep/20/2023 ~ Dec/20/2023 
 
 ## Project Content
-1. [Collaborator](#collaborator)
+1. [Team Members](#collaborator)
 2. [Project Overview](#project-overview) 
 3. [Research problem statements](#research-problem-statements)
 4. [Research novelty](#research-novelty)
@@ -25,14 +25,14 @@ Establishing the Correlation Between Bio-Data and Concentration Level Utilizing 
 
 ## Team Members
 
-| Name         | University               | Department                                   | Email               | Contact                        |
+| Name         | University               | Department                                   | Email               | Git                        |
 | :------------- | :------------------------: | :--------------------------------------------: | :-------------------: | :------------------------------: |
 | Seojeong Park    | Hallym University        | Computer Science                    | diditjwjd@gmail.com | https://github.com/seojeongP     |
-| Seungah Jang  | Jeju National University        | Computer Science                    | wkdtmddk6733@gmail.com   | https://github.com/ssaaJang     |
-| Jeongmin Seo | Kyunhee University     | Computer Information                | balljm@naver.com | https://github.com/jeongmin1217       |
+| Seungah Jang  | Jeju National University        | Computer Science and Statistics                    | wkdtmddk6733@gmail.com   | https://github.com/ssaaJang     |
+| Jeongmin Seo | Kyunhee University     | Software Convergence               | balljm@naver.com | https://github.com/jeongmin1217       |
 | Yunhui Lim | Kyunhee University     | Computer Science and Engineering                | lyhhh0320@gmail.com   | https://github.com/YunheeLim    |
 | Byeongsoo Min  | Kyunhee University | Computer Science and Engineering       | qud9783@gmail.com   | https://github.com/Byeongsoo-Min  |
-| Martin Kim | Purdue University        | Computer Science | 19alswprla@gmail.com    | https://github.com/19alswprla |
+| Martin Kim | Purdue University        | Computer and Information Technology | 19alswprla@gmail.com    | https://github.com/19alswprla |
 
 ## Research Problem Statements 
 
@@ -81,7 +81,10 @@ pip install numpy pandas matplotlib shap lime xgboost
 npm install --g expo-cli
 ```
 ```bash
-git clone 
+git clone https://github.com/YunheeLim/CandY.git
+```
+```bash
+cd code/fontend
 ```
 ```bash
 npm start
@@ -120,7 +123,6 @@ npm start
      └📂paper
       └📜paper.pdf
      └📂code
-       └📂data_analysis
        └📂Machine_Learning
         └📜Dataset_selection_Model_selection.ipynb
         └📜Model_Optimization.ipynb
@@ -130,7 +132,6 @@ npm start
          └📂components
            └📜CircleProgress.js
            └📜CircularProgress.js
-         └📂node_modules
          └📂screens
            └📂Home
              └📜Bluetooth.js
@@ -151,20 +152,22 @@ npm start
              └📜DailyStatistics.js
              └📜SessionStatistics.js
              └📜Statistics.js
-
          └📜App.js
-         └📜app.json
-         └📜babel.coonfig.js
-         └📜package-lock.json
          └📜package.json
-         └📜react-native.config.js
-         └📜yarn.lock
        └📂backend
+         └📂CandY_Server
+           └📜views.py
+         └📂models
      └📜README.md
+     └ ...
        
 
-## Experiment Result
-    
+## Experiment
+>### Dataset
+The pre-processed dataset is in data folder. You can see the raw dataset in this link: https://drive.google.com/drive/folders/1i6HLH5zdqJvw2UVocrSX6AfheRVAwdkn?usp=sharing
+
+>### Result
+
 >#### 5-Fold Cross-Validation
 
 |   |R2|RMSE|MAE|
